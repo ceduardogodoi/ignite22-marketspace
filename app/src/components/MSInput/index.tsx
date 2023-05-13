@@ -1,4 +1,4 @@
-import { IInputProps, Input, Text } from 'native-base';
+import { IInputProps, Input } from 'native-base';
 
 export function MSInput({ ...rest }: IInputProps) {
   return (
