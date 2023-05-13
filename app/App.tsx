@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { Box, HStack, Heading, NativeBaseProvider, Text } from 'native-base';
+import { HStack, NativeBaseProvider } from 'native-base';
 import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/karla';
 
 import { theme } from './config/theme';
+import { MSInput } from './src/components/MSInput';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,10 +18,9 @@ export default function App() {
       <StatusBar style="auto" />
 
       <HStack flex={1} justifyContent="center" alignItems="center">
-        <Box flex={1} justifyContent="center" alignItems="center">
-          <Heading fontSize="sm" color="custom.blue">Heading</Heading>
-          <Text color="custom.red-light">Open up App.tsx to start working on your app!</Text>
-        </Box>
+
+        <MSInput placeholder="teste" />
+
       </HStack>
     </NativeBaseProvider>
   );
