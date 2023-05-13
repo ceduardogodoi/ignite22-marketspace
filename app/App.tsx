@@ -3,7 +3,7 @@ import { HStack, NativeBaseProvider } from 'native-base';
 import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/karla';
 
 import { theme } from './config/theme';
-import { MSInput } from './src/components/MSInput';
+import { MSTag } from './src/components/MSTag';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,7 +19,8 @@ export default function App() {
 
       <HStack flex={1} justifyContent="center" alignItems="center">
 
-        <MSInput placeholder="teste" />
+        <MSTag title="Tag" />
+        <MSTag title="Tag" isSelected />
 
       </HStack>
     </NativeBaseProvider>
