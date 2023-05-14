@@ -3,7 +3,7 @@ import { HStack, NativeBaseProvider } from 'native-base';
 import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/karla';
 
 import { theme } from './config/theme';
-import { MSSwitch } from './src/components/MSSwitch';
+import { MSProductCard } from './src/components/MSProductCard';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,9 +17,14 @@ export default function App() {
     <NativeBaseProvider theme={theme}>
       <StatusBar style="auto" />
 
-      <HStack flex={1} justifyContent="center" alignItems="center">
+      <HStack
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        bgColor="black"
+      >
 
-        <MSSwitch />
+        <MSProductCard />
 
       </HStack>
     </NativeBaseProvider>
