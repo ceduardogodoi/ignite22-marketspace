@@ -1,13 +1,13 @@
-import { Box, Pressable, Text } from 'native-base';
+import { Box, IPressableProps, Pressable, Text } from 'native-base';
 import { XCircle } from 'phosphor-react-native';
 import { theme } from '../../../config/theme';
 
-type Props = {
+type Props = IPressableProps & {
   title: string;
   isSelected?: boolean;
 };
 
-export function MSTag({ title, isSelected = false }: Props) {
+export function MSTag({ title, isSelected = false, color, ...rest }: Props) {
   return (
     <Pressable
       flexDir="row"
@@ -18,12 +18,13 @@ export function MSTag({ title, isSelected = false }: Props) {
       bgColor={isSelected ? 'custom.blue-light' : 'custom.gray-5'}
       borderRadius="full"
       alignItems="center"
+      {...rest}
     >
       <Text
         fontSize="xs"
         fontWeight="bold"
         textTransform="uppercase"
-        color={isSelected ? 'white' : 'custom.gray-3'}
+        color={color}
       >
         {title}
       </Text>

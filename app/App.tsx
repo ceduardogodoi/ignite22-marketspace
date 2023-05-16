@@ -24,7 +24,7 @@ export default function App() {
         bgColor="black"
       >
 
-        <MSProductCard />
+        <MSProductCard active={false} product={{ tag: 'Novo' }} />
 
       </HStack>
     </NativeBaseProvider>
