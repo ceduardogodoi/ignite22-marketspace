@@ -1,56 +1,42 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Button, Heading, Text, VStack } from 'native-base';
 import { Image } from 'expo-image';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MSInput } from '../components/MSInput';
 
 import logo from '../assets/logo.png';
 
-export function Login() {
+const TOP_SPACING = 65;
+
+export function SignIn() {
+  const insets = useSafeAreaInsets();
+  const paddingTop = insets.top + TOP_SPACING;
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <VStack
-        flex={1}
-        bgColor="white"
-      >
+      <VStack flex={1} bgColor="white">
         <VStack
           bgColor="custom.gray-6"
           borderBottomRightRadius={24}
           borderBottomLeftRadius={24}
+          style={{ paddingTop }}
           px="12"
           justifyContent="center"
           alignItems="center"
         >
-          <Image
-            source={logo}
-            style={styles.logo}
-          />
+          <Image source={logo} style={styles.logo} />
 
-          <Heading
-            mt="5"
-            fontSize="3xl"
-            textAlign="center"
-            color="custom.gray-1"
-          >
+          <Heading mt="5" fontSize="3xl" textAlign="center" color="custom.gray-1">
             marketspace
           </Heading>
-          <Text
-            mt="0.5"
-            fontSize="sm"
-            textAlign="center"
-            color="custom.gray-3"
-          >
+
+          <Text mt="0.5" fontSize="sm" textAlign="center" color="custom.gray-3">
             Seu espaço de compra e venda
           </Text>
 
           <VStack>
-            <Text
-              mt="20"
-              mb="4"
-              fontSize="sm"
-              color="custom.gray-2"
-              textAlign="center"
-            >
+            <Text mt="20" mb="4" fontSize="sm" color="custom.gray-2" textAlign="center">
               Acesse sua conta
             </Text>
 
@@ -71,45 +57,21 @@ export function Login() {
               secureTextEntry
             />
 
-            <Button
-              mb="16"
-              p="3"
-              bgColor="custom.blue-light"
-            >
-              <Text
-                fontWeight="bold"
-                fontSize="sm"
-                color="custom.gray-7"
-              >
+            <Button mb="16" p="3" bgColor="custom.blue-light">
+              <Text fontWeight="bold" fontSize="sm" color="custom.gray-7">
                 Entrar
               </Text>
             </Button>
           </VStack>
         </VStack>
 
-        <VStack
-          px="12"
-        >
-          <Text
-            mt="12"
-            mb="4"
-            fontSize="sm"
-            color="custom.gray-2"
-            textAlign="center"
-          >
+        <VStack px="12">
+          <Text mt="12" mb="4" fontSize="sm" color="custom.gray-2" textAlign="center">
             Ainda não tem acesso?
           </Text>
 
-          <Button
-            mb="16"
-            p="3"
-            bgColor="custom.gray-5"
-          >
-            <Text
-              fontWeight="bold"
-              fontSize="sm"
-              color="custom.gray-2"
-            >
+          <Button mb="16" p="3" bgColor="custom.gray-5">
+            <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">
               Criar uma conta
             </Text>
           </Button>
@@ -123,6 +85,5 @@ const styles = StyleSheet.create({
   logo: {
     width: 96,
     height: 64,
-    marginTop: 80,
   },
 });
