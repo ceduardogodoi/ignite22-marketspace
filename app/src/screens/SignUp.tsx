@@ -3,12 +3,13 @@ import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Image } from 'expo-image';
-import { PencilSimpleLine, User } from 'phosphor-react-native';
+
+import { MSInput } from '../components/MSInput';
+import { MSAvatar } from '../components/MSAvatar';
 
 import { theme } from '../../config/theme';
 
 import logo from '../assets/logo.png';
-import { MSInput } from '../components/MSInput';
 
 const TOP_SPACING = 36;
 
@@ -37,32 +38,7 @@ export function SignUp() {
           </Text>
 
           <Box style={styles.form} mt="8" w="full" alignItems="center">
-            <Box
-              w="20"
-              h="20"
-              bgColor="custom.gray-5"
-              borderWidth="2"
-              borderStyle="solid"
-              borderColor="custom.blue-light"
-              rounded="full"
-              justifyContent="center"
-              alignItems="center"
-            >
-              {/* <Image source={{ uri: 'https://github.com/ceduardogodoi.png' }} style={styles.avatar} /> */}
-              <User weight="bold" size={45} color={theme.colors.custom['gray-4']} />
-
-              <Button
-                w="10"
-                h="10"
-                bgColor="custom.blue-light"
-                rounded="full"
-                position="absolute"
-                right="0"
-                bottom="0"
-              >
-                <PencilSimpleLine size={16} color={theme.colors.custom['gray-6']} />
-              </Button>
-            </Box>
+            <MSAvatar size="20" editable />
 
             <MSInput placeholder="Nome" fontSize="md" />
             <MSInput placeholder="E-mail" fontSize="md" keyboardType="email-address" />
