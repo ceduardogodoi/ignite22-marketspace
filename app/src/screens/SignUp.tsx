@@ -47,14 +47,32 @@ export function SignUp() {
             <MSInput placeholder="Confirmar senha" secureTextEntry fontSize="md" keyboardType="visible-password" />
           </Box>
 
-          <Button mt="6" w="full" p="3" bgColor="custom.gray-1" borderRadius={6}>
+          <Button
+            mt="6"
+            w="full"
+            p="3"
+            bgColor="custom.gray-1"
+            borderRadius={6}
+            _pressed={{
+              bgColor: 'custom.gray-2',
+            }}
+          >
             <Text fontWeight="bold" fontSize="sm" color="custom.gray-7">Criar</Text>
           </Button>
 
           <Text mt="12" fontSize="sm" color="custom.gray-2">
             Já tem uma conta?
           </Text>
-          <Button mt="4" w="full" p="3" bgColor="custom.gray-5" borderRadius={6}>
+          <Button
+            mt="4"
+            w="full"
+            p="3"
+            bgColor="custom.gray-5"
+            borderRadius={6}
+            _pressed={{
+              bgColor: 'custom.gray-4',
+            }}
+          >
             <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">Ir para o login</Text>
           </Button>
 
