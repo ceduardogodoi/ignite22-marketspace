@@ -7,7 +7,12 @@ type Props = IPressableProps & {
   isSelected?: boolean;
 };
 
-export function MSTag({ title, isSelected = false, color, ...rest }: Props) {
+export function MSTag({
+  title,
+  isSelected = false,
+  color = 'custom.gray-3',
+  ...rest }: Props
+) {
   return (
     <Pressable
       flexDir="row"
@@ -24,7 +29,7 @@ export function MSTag({ title, isSelected = false, color, ...rest }: Props) {
         fontSize="xs"
         fontWeight="bold"
         textTransform="uppercase"
-        color={color}
+        color={isSelected ? 'white' : color}
       >
         {title}
       </Text>

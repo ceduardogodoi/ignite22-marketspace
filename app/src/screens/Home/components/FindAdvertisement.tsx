@@ -5,7 +5,13 @@ import { MSInput } from '../../../components/MSInput';
 
 import { theme } from '../../../../config/theme';
 
-export function FindItems() {
+type Props = {
+  onOpenFilterModal(): void;
+};
+
+export function FindAdvertisement({
+  onOpenFilterModal: handleOpenFilterModal
+}: Props) {
   return (
     <VStack mb="6">
       <Text
@@ -28,7 +34,11 @@ export function FindItems() {
 
             <Divider orientation="vertical" h="5" />
 
-            <Button variant="ghost" _pressed={{ bgColor: 'custom.gray-5' }}>
+            <Button
+              variant="ghost"
+              _pressed={{ bgColor: 'custom.gray-5' }}
+              onPress={handleOpenFilterModal}
+            >
               <Sliders size={20} color={theme.colors.custom['gray-2']} />
             </Button>
           </HStack>

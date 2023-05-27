@@ -2,21 +2,33 @@ import { Box, FlatList, VStack } from 'native-base';
 
 import { Header } from './components/Header';
 import { AdvertisementsCard } from './components/AdvertisementsCard';
-import { FindItems } from './components/FindItems';
+import { FindAdvertisement } from './components/FindAdvertisement';
 import { MSProductCard } from '../../components/MSProductCard';
+import { FilterModal } from './components/FilterModal';
+import { useState } from 'react';
 
 function HorizontalSeparatorComponent() {
   return <Box h="6" bgColor="transparent" />
 }
 
 export function Home() {
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  function handleOpenFilterModal() {
+    setIsFilterModalOpen(true);
+  }
+
+  function handleCloseFilterModal() {
+    setIsFilterModalOpen(false);
+  }
+
   return (
     <VStack flex={1} bgColor="custom.gray-6" px="6" pb="6">
       <Header />
 
       <AdvertisementsCard />
 
-      <FindItems />
+      <FindAdvertisement onOpenFilterModal={handleOpenFilterModal} />
 
       <FlatList
         data={['1', '2', '3', '4', '5', '6']}
@@ -35,6 +47,8 @@ export function Home() {
           />
         )}
       />
+
+      <FilterModal isOpen={isFilterModalOpen} onClose={handleCloseFilterModal} />
     </VStack>
   );
 }
