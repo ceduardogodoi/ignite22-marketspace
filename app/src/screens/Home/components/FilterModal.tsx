@@ -1,11 +1,16 @@
 import { Platform } from 'react-native';
 import { Modal, IModalProps, Text, VStack, HStack, Checkbox, Button } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { X } from 'phosphor-react-native';
 
 import { MSTag } from '../../../components/MSTag';
 import { MSSwitch } from '../../../components/MSSwitch';
+import { theme } from '../../../../config/theme';
 
-export function FilterModal({ ...rest }: IModalProps) {
+export function FilterModal({
+  onClose: handleCloseModal,
+  ...rest
+}: IModalProps) {
   const insets = useSafeAreaInsets();
 
   const paddingTop = insets.top + 32;
@@ -22,15 +27,20 @@ export function FilterModal({ ...rest }: IModalProps) {
       {...rest}
     >
       <VStack>
-        <Text
-          mb="6"
-          fontWeight="bold"
-          fontSize="xl"
-          lineHeight="lg"
-          color="custom.gray-1"
-        >
-          Filtrar anúncios
-        </Text>
+        <HStack mb="6" w="full" alignItems="center" justifyContent="space-between">
+          <Text
+            fontWeight="bold"
+            fontSize="xl"
+            lineHeight="lg"
+            color="custom.gray-1"
+          >
+            Filtrar anúncios
+          </Text>
+
+          <Button variant="ghost" _pressed={{ bgColor: 'custom.gray-5' }} onPress={handleCloseModal}>
+            <X size={24} color={theme.colors.custom['gray-4']} />
+          </Button>
+        </HStack>
 
         <Text
           mb="6"
