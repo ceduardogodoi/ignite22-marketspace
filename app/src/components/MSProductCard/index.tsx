@@ -14,12 +14,10 @@ export function MSProductCard({
   product,
 }: Props) {
   return (
-    <Box
-      bgColor="custom.gray-7"
-    >
+    <Box>
       <Box
-        minH="40"
-        minW="56"
+        minW={153}
+        minH={100}
         borderRadius={6}
       >
         {!active && (

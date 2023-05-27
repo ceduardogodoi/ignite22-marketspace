@@ -5,6 +5,7 @@ export const theme = extendTheme({
     custom: {
       'blue': '#364D9D',
       'blue-light': '#647AC7',
+      'blue-lightest': 'rgba(100, 122, 199, 0.1)',
 
       'gray-1': '#1A181B',
       'gray-2': '#3E3A40',
@@ -32,6 +33,6 @@ export const theme = extendTheme({
     heading: 'Karla',
     body: 'Karla',
   },
-});
+} as const);
 
 export type Theme = typeof theme
