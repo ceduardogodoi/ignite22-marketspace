@@ -3,7 +3,7 @@ import { NativeBaseProvider } from 'native-base';
 import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/karla';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { Home } from './src/screens/Home';
+import { AdvertisementDetail } from './src/screens/AdvertisementDetail';
 
 import { theme } from './config/theme';
 
@@ -20,7 +20,7 @@ export default function App() {
       <SafeAreaProvider>
         <StatusBar style="auto" />
 
-        <Home />
+        <AdvertisementDetail />
       </SafeAreaProvider>
     </NativeBaseProvider>
   );
