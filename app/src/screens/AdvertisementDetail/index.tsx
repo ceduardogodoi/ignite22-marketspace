@@ -1,15 +1,19 @@
-import { Platform } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { Box, Button, HStack, ScrollView, Text, VStack } from 'native-base';
 import { ArrowLeft, Bank, Barcode, CreditCard, Money, QrCode, WhatsappLogo } from 'phosphor-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Carousel from 'react-native-reanimated-carousel';
 
 import { MSAvatar } from '../../components/MSAvatar';
 import { MSTag } from '../../components/MSTag';
+import { CarouselItem } from './components/CarouselItem';
 
 import { theme } from '../../../config/theme';
 
 export function AdvertisementDetail() {
   const insets = useSafeAreaInsets();
+
+  const { width } = useWindowDimensions();
 
   const paddingTop = insets.top + 20;
 
@@ -21,7 +25,15 @@ export function AdvertisementDetail() {
         </Button>
       </HStack>
 
-      <Box h="72" bgColor="custom.blue" />
+      <Box h="72">
+        <Carousel
+          width={width}
+          data={[...new Array(3).keys()]}
+          renderItem={({ item }) => (
+            <CarouselItem item={item} />
+          )}
+        />
+      </Box>
 
       <VStack pt="5" pb="7" bgColor="custom.gray-6">
         <VStack px="6">

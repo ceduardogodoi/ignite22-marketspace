@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider } from 'native-base';
 import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/karla';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AdvertisementDetail } from './src/screens/AdvertisementDetail';
 
@@ -16,13 +17,15 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <SafeAreaProvider>
-        <StatusBar style="auto" />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NativeBaseProvider theme={theme}>
+        <SafeAreaProvider>
+          <StatusBar style="auto" />
 
-        <AdvertisementDetail />
-      </SafeAreaProvider>
-    </NativeBaseProvider>
+          <AdvertisementDetail />
+        </SafeAreaProvider>
+      </NativeBaseProvider>
+    </GestureHandlerRootView>
   );
 }
 
