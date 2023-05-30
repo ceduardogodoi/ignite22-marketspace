@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Platform, useWindowDimensions } from 'react-native';
 import { Box, Button, HStack, ScrollView, Text, VStack } from 'native-base';
 import { ArrowLeft, Bank, Barcode, CreditCard, Money, QrCode, WhatsappLogo } from 'phosphor-react-native';
@@ -7,10 +8,15 @@ import Carousel from 'react-native-reanimated-carousel';
 import { MSAvatar } from '../../components/MSAvatar';
 import { MSTag } from '../../components/MSTag';
 import { CarouselItem } from './components/CarouselItem';
+import { PaginationItem } from './components/PaginationItem';
 
 import { theme } from '../../../config/theme';
 
+import { productImages } from '../../utils/data';
+
 export function AdvertisementDetail() {
+  const [currentImage, setCurrentImage] = useState(0);
+
   const insets = useSafeAreaInsets();
 
   const { width } = useWindowDimensions();
@@ -27,12 +33,29 @@ export function AdvertisementDetail() {
 
       <Box h="72">
         <Carousel
+          loop={false}
           width={width}
-          data={[...new Array(3).keys()]}
+          data={productImages}
           renderItem={({ item }) => (
             <CarouselItem item={item} />
           )}
+          onProgressChange={(_, absoluteProgress) => {
+            setCurrentImage(Math.round(absoluteProgress));
+          }}
         />
+        <HStack
+          p="1"
+          position="absolute"
+          bottom="0"
+          style={{ columnGap: 4 }}
+        >
+          {productImages.map((image, index) => (
+            <PaginationItem
+              key={image}
+              isActive={index === currentImage}
+            />
+          ))}
+        </HStack>
       </Box>
 
       <VStack pt="5" pb="7" bgColor="custom.gray-6">

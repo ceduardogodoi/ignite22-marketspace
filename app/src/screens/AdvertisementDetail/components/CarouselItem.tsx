@@ -1,7 +1,9 @@
-import { Box, Text } from 'native-base';
+import { StyleSheet } from 'react-native';
+import { Box } from 'native-base';
+import { Image } from 'expo-image';
 
 type Props = {
-  item: number;
+  item: string;
 };
 
 export function CarouselItem({ item }: Props) {
@@ -11,9 +13,17 @@ export function CarouselItem({ item }: Props) {
       justifyContent="center"
       bgColor="red.500"
     >
-      <Text textAlign="center" fontSize="xl">
-        {item}
-      </Text>
+      <Image
+        style={styles.image}
+        source={{ uri: item }}
+      />
     </Box>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+});
