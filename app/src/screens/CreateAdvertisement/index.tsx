@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import {
   Box,
   Button,
@@ -7,12 +7,12 @@ import {
   Heading,
   Pressable,
   Radio,
-  ScrollView,
   Text,
   TextArea,
   VStack,
 } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ArrowLeft, Plus } from 'phosphor-react-native';
 
 import { MSInput } from '../../components/MSInput';
@@ -29,7 +29,11 @@ export function CreateAdvertisement() {
   const paddingBottom = Platform.OS === 'ios' ? insets.bottom : undefined;
 
   return (
-    <ScrollView flex={1} bgColor="custom.gray-7">
+    <KeyboardAwareScrollView
+      style={styles.container}
+      enableOnAndroid
+      extraScrollHeight={Platform.OS === 'android' ? 100 : undefined}
+    >
       <VStack mt={marginTop} px="6" pb="6" bgColor="custom.gray-6">
         <HStack mb="6" alignItems="center" justifyContent="center">
           <Heading fontWeight="bold" fontSize="xl" textAlign="center">
@@ -261,6 +265,13 @@ export function CreateAdvertisement() {
           </Text>
         </Button>
       </HStack>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.custom['gray-6'],
+  },
+});
