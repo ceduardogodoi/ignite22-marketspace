@@ -5,7 +5,10 @@ import { X } from 'phosphor-react-native';
 
 import { MSTag } from '../../../components/MSTag';
 import { MSSwitch } from '../../../components/MSSwitch';
+
 import { theme } from '../../../../config/theme';
+
+import { paymentMethods } from '../../../utils/data';
 
 export function FilterModal({
   onClose: handleCloseModal,
@@ -78,27 +81,32 @@ export function FilterModal({
         >
           Meios de pagamento aceitos
         </Text>
+
         <Checkbox.Group>
-          {['Boleto', 'Pix', 'Dinheiro', 'Cartão de Crédito', 'Depósito Bancário']
-            .map(paymentType => (
-              <Checkbox
-                key={paymentType}
-                value={paymentType}
-                borderColor="custom.gray-4"
-                _checked={{
-                  borderColor: 'custom.blue-light',
-                  bgColor: 'custom.blue-light',
-                }}
-              >
-                <Text
-                  fontSize="md"
-                  color="custom.gray-2"
+          <VStack space="2">
+            {paymentMethods
+              .map(paymentType => (
+                <Checkbox
+                  key={paymentType}
+                  value={paymentType}
+                  borderWidth={1}
+                  borderColor="custom.gray-4"
+                  borderStyle="solid"
+                  _checked={{
+                    borderColor: 'custom.blue-light',
+                    bgColor: 'custom.blue-light',
+                  }}
                 >
-                  {paymentType}
-                </Text>
-              </Checkbox>
-            ))
-          }
+                  <Text
+                    fontSize="md"
+                    color="custom.gray-2"
+                  >
+                    {paymentType}
+                  </Text>
+                </Checkbox>
+              ))
+            }
+          </VStack>
         </Checkbox.Group>
       </VStack>
 
