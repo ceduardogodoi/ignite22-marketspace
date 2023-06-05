@@ -17,8 +17,11 @@ import {
   Barcode,
   CreditCard,
   Money,
+  PencilSimpleLine,
+  Power,
   QrCode,
   Tag,
+  TrashSimple,
   WhatsappLogo,
 } from 'phosphor-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,6 +37,8 @@ import { productImages } from '../../utils/data';
 export function AdvertisementDetail() {
   const [currentImage, setCurrentImage] = useState(0);
   const isPreviewing = false;
+  const isOwnAdvertisement = true;
+  const isAdvertisementActive = false;
 
   const { colors } = useTheme();
 
@@ -87,10 +92,16 @@ export function AdvertisementDetail() {
             </Text>
           </VStack>
         ) : (
-          <HStack px="3">
+          <HStack px="3" justifyContent="space-between">
             <Button variant="ghost" _pressed={{ bgColor: 'custom.gray-5' }}>
               <ArrowLeft size={24} color={colors.custom['gray-1']} />
             </Button>
+
+            {isOwnAdvertisement && (
+              <Button variant="ghost" _pressed={{ bgColor: 'custom.gray-5' }}>
+                <PencilSimpleLine size={24} color={colors.custom['gray-1']} />
+              </Button>
+            )}
           </HStack>
         )}
 
@@ -100,7 +111,10 @@ export function AdvertisementDetail() {
             width={width}
             data={productImages}
             renderItem={({ item }) => (
-              <CarouselItem item={item} />
+              <CarouselItem
+                item={item}
+                active={isAdvertisementActive}
+              />
             )}
             onProgressChange={(_, absoluteProgress) => {
               setCurrentImage(Math.round(absoluteProgress));
@@ -205,104 +219,152 @@ export function AdvertisementDetail() {
               <Bank size={18} color={colors.custom['gray-1']} />
               <Text ml="2">Depósito Bancário</Text>
             </HStack>
+
+            {isOwnAdvertisement && (
+              <VStack mt="6" space="2">
+                <Button
+                  minW="40"
+                  h="10"
+                  bgColor={isAdvertisementActive ? 'custom.gray-1' : 'custom.blue-light'}
+                  borderRadius={6}
+                >
+                  <HStack space="2">
+                    <Power size={16} color={colors.custom['gray-6']} />
+
+                    <Text
+                      fontWeight="bold"
+                      fontSize="sm"
+                      lineHeight="xs"
+                      color="custom.gray-7"
+                    >
+                      {isAdvertisementActive ? 'Desativar' : 'Reativar'} anúncio
+                    </Text>
+                  </HStack>
+                </Button>
+
+                <Button
+                  minW="40"
+                  h="10"
+                  bgColor="custom.gray-5"
+                  borderRadius={6}
+                >
+                  <HStack space="2">
+                    <TrashSimple size={16} color={colors.custom['gray-2']} />
+
+                    <Text
+                      fontWeight="bold"
+                      fontSize="sm"
+                      lineHeight="xs"
+                      color="custom.gray-2"
+                    >
+                      Excluir anúncio
+                    </Text>
+                  </HStack>
+                </Button>
+              </VStack>
+            )}
           </VStack>
         </VStack>
 
-        {isPreviewing ? (
-          <HStack
-            px="6"
-            py="5"
-            pb={paddingBottom}
-            bgColor="custom.gray-7"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Button
-              minW="40"
-              h="10"
-              bgColor="custom.gray-5"
-              borderRadius={6}
-            >
-              <HStack space="2">
-                <ArrowLeft size={16} color={colors.custom['gray-2']} />
-
-                <Text
-                  fontWeight="bold"
-                  fontSize="sm"
-                  lineHeight="xs"
-                  color="custom.gray-2"
-                >
-                  Voltar e editar
-                </Text>
-              </HStack>
-            </Button>
-            <Button
-              minW="40"
-              h="10"
-              bgColor="custom.blue-light"
-              borderRadius={6}
-            >
-              <HStack space="2">
-                <Tag size={16} color={colors.custom['gray-6']} />
-
-                <Text
-                  fontWeight="bold"
-                  fontSize="sm"
-                  lineHeight="xs"
-                  color="custom.gray-7"
-                >
-                  Publicar
-                </Text>
-
-              </HStack>
-            </Button>
-          </HStack>
-        ) : (
-          <HStack
-            px="6"
-            py="5"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <HStack>
-              <Text
-                fontWeight="bold"
-                fontSize="sm"
-                lineHeight="xs"
-                color="custom.blue"
-                alignSelf="flex-end"
+        {!isOwnAdvertisement && (
+          <Box>
+            {isPreviewing ? (
+              <HStack
+                px="6"
+                py="5"
+                pb={paddingBottom}
+                bgColor="custom.gray-7"
+                justifyContent="space-between"
+                alignItems="center"
               >
-                R${' '}
-              </Text>
-              <Text
-                fontWeight="bold"
-                fontSize="2xl"
-                lineHeight="xs"
-                color="custom.blue"
-                style={{
-                  transform: [{ translateY: 3 }],
-                }}
-              >
-                120,00
-              </Text>
-            </HStack>
+                <Button
+                  minW="40"
+                  h="10"
+                  bgColor="custom.gray-5"
+                  borderRadius={6}
+                >
+                  <HStack space="2">
+                    <ArrowLeft size={16} color={colors.custom['gray-2']} />
 
-            <Button
-              p="3"
-              h="12"
-              bgColor="custom.blue"
-              borderRadius={6}
-              _pressed={{ bgColor: 'custom.blue-light' }}
-            >
-              <HStack>
-                <WhatsappLogo size={16} weight="fill" color={colors.custom['gray-6']} />
+                    <Text
+                      fontWeight="bold"
+                      fontSize="sm"
+                      lineHeight="xs"
+                      color="custom.gray-2"
+                    >
+                      Voltar e editar
+                    </Text>
+                  </HStack>
+                </Button>
+                <Button
+                  minW="40"
+                  h="10"
+                  bgColor="custom.blue-light"
+                  borderRadius={6}
+                >
+                  <HStack space="2">
+                    <Tag size={16} color={colors.custom['gray-6']} />
 
-                <Text ml="2" fontWeight="bold" fontSize="sm" lineHeight="xs" color="custom.gray-7">
-                  Entrar em contato
-                </Text>
+                    <Text
+                      fontWeight="bold"
+                      fontSize="sm"
+                      lineHeight="xs"
+                      color="custom.gray-7"
+                    >
+                      Publicar
+                    </Text>
+
+                  </HStack>
+                </Button>
               </HStack>
-            </Button>
-          </HStack>
+            ) : (
+              <HStack
+                px="6"
+                py="5"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <HStack>
+                  <Text
+                    fontWeight="bold"
+                    fontSize="sm"
+                    lineHeight="xs"
+                    color="custom.blue"
+                    alignSelf="flex-end"
+                  >
+                    R${' '}
+                  </Text>
+                  <Text
+                    fontWeight="bold"
+                    fontSize="2xl"
+                    lineHeight="xs"
+                    color="custom.blue"
+                    style={{
+                      transform: [{ translateY: 3 }],
+                    }}
+                  >
+                    120,00
+                  </Text>
+                </HStack>
+
+                <Button
+                  p="3"
+                  h="12"
+                  bgColor="custom.blue"
+                  borderRadius={6}
+                  _pressed={{ bgColor: 'custom.blue-light' }}
+                >
+                  <HStack>
+                    <WhatsappLogo size={16} weight="fill" color={colors.custom['gray-6']} />
+
+                    <Text ml="2" fontWeight="bold" fontSize="sm" lineHeight="xs" color="custom.gray-7">
+                      Entrar em contato
+                    </Text>
+                  </HStack>
+                </Button>
+              </HStack>
+            )}
+          </Box>
         )}
 
         <Box w="full" h={Platform.OS === 'android' ? '12' : '20'} />
