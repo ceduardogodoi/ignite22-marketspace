@@ -13,7 +13,7 @@ import {
 } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { ArrowLeft, Plus } from 'phosphor-react-native';
+import { ArrowLeft, Plus, X } from 'phosphor-react-native';
 
 import { MSInput } from '../../components/MSInput';
 import { MSSwitch } from '../../components/MSSwitch';
@@ -81,6 +81,20 @@ export function CreateAdvertisement() {
               justifyContent="center"
               alignItems="center"
             >
+              <Pressable
+                w="5"
+                h="5"
+                bgColor="custom.gray-2"
+                rounded="full"
+                justifyContent="center"
+                alignItems="center"
+                position="absolute"
+                top="1"
+                right="1"
+              >
+                <X size={12} color={theme.colors.custom['gray-7']} />
+              </Pressable>
+
               <Plus size={24} color={theme.colors.custom['gray-4']} />
             </Box>
           </HStack>
