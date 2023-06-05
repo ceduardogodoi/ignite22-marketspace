@@ -4,7 +4,7 @@ import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/ka
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { CreateAdvertisement } from './src/screens/CreateAdvertisement';
+import { AdvertisementDetail } from './src/screens/AdvertisementDetail';
 
 import { theme } from './config/theme';
 
@@ -22,7 +22,7 @@ export default function App() {
         <SafeAreaProvider>
           <StatusBar style="auto" />
 
-          <CreateAdvertisement />
+          <AdvertisementDetail />
         </SafeAreaProvider>
       </NativeBaseProvider>
     </GestureHandlerRootView>
