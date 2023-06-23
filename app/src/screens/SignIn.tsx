@@ -1,4 +1,5 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Button, Heading, Text, VStack } from 'native-base';
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,8 +11,14 @@ import logo from '../assets/logo.png';
 const TOP_SPACING = 65;
 
 export function SignIn() {
+  const navigation = useNavigation()
+
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
+
+  function handleGoToSignUp() {
+    navigation.navigate('SignUp');
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -70,7 +77,7 @@ export function SignIn() {
             Ainda não tem acesso?
           </Text>
 
-          <Button mb="16" p="3" bgColor="custom.gray-5">
+          <Button mb="16" p="3" bgColor="custom.gray-5" onPress={handleGoToSignUp}>
             <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">
               Criar uma conta
             </Text>

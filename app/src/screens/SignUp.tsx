@@ -3,6 +3,9 @@ import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Image } from 'expo-image';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import { MSInput } from '../components/MSInput';
 import { MSAvatar } from '../components/MSAvatar';
@@ -13,9 +16,27 @@ import logo from '../assets/logo.png';
 
 const TOP_SPACING = 36;
 
+const SignUpSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  tel: z.string(),
+  password: z.string(),
+  confirm_password: z.string(),
+});
+
+type SignUpData = z.infer<typeof SignUpSchema>;
+
 export function SignUp() {
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
+
+  const { control, handleSubmit } = useForm<SignUpData>({
+    resolver: zodResolver(SignUpSchema),
+  });
+
+  async function onSubmit(data: SignUpData) {
+    console.log(data);
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -40,11 +61,77 @@ export function SignUp() {
           <Box style={styles.form} mt="8" w="full" alignItems="center">
             <MSAvatar size="20" editable />
 
-            <MSInput placeholder="Nome" fontSize="md" />
-            <MSInput placeholder="E-mail" fontSize="md" keyboardType="email-address" />
-            <MSInput placeholder="Telefone" fontSize="md" keyboardType="phone-pad" />
-            <MSInput placeholder="Senha" secureTextEntry fontSize="md" keyboardType="visible-password" />
-            <MSInput placeholder="Confirmar senha" secureTextEntry fontSize="md" keyboardType="visible-password" />
+            <Controller
+              control={control}
+              name="name"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <MSInput
+                  placeholder="Nome"
+                  fontSize="md"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <MSInput
+                  placeholder="E-mail"
+                  fontSize="md"
+                  keyboardType="email-address"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="tel"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <MSInput
+                  placeholder="Telefone"
+                  fontSize="md"
+                  keyboardType="phone-pad"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <MSInput
+                  placeholder="Senha"
+                  secureTextEntry
+                  fontSize="md"
+                  keyboardType="visible-password"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="confirm_password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <MSInput
+                  placeholder="Confirmar senha"
+                  secureTextEntry
+                  fontSize="md"
+                  keyboardType="visible-password"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
           </Box>
 
           <Button
@@ -56,8 +143,11 @@ export function SignUp() {
             _pressed={{
               bgColor: 'custom.gray-2',
             }}
+            onPress={handleSubmit(onSubmit)}
           >
-            <Text fontWeight="bold" fontSize="sm" color="custom.gray-7">Criar</Text>
+            <Text fontWeight="bold" fontSize="sm" color="custom.gray-7">
+              Criar
+            </Text>
           </Button>
 
           <Text mt="12" fontSize="sm" color="custom.gray-2">
@@ -73,7 +163,9 @@ export function SignUp() {
               bgColor: 'custom.gray-4',
             }}
           >
-            <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">Ir para o login</Text>
+            <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">
+              Ir para o login
+            </Text>
           </Button>
 
           <Box w="full" h="32" />
