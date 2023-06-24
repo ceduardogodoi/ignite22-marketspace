@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SignUp } from '../screens/SignUp';
 import { SignIn } from '../screens/SignIn';
 
-export type AuthStackParamList = {
+type RootStackParamList = {
   SignUp: undefined;
   SignIn: undefined;
 };
 
-const Stack = createNativeStackNavigator<AuthStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function AuthRoutes() {
   return (
