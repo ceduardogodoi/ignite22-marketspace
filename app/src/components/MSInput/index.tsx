@@ -4,9 +4,21 @@ import { Eye, EyeClosed } from 'phosphor-react-native';
 import { theme } from '../../../config/theme';
 import { useState } from 'react';
 
-export function MSInput({ mb, w, secureTextEntry = false, ...rest }: IInputProps) {
+type MSInputProps = IInputProps & {
+  errorMessage?: string;
+}
+
+export function MSInput({
+  mb,
+  w,
+  errorMessage,
+  secureTextEntry = false,
+  ...rest
+}: MSInputProps) {
   const [isShowingPassword, setIsShowingPassword] = useState(false);
   const [_secureTextEntry, _setSecureTextEntry] = useState(secureTextEntry);
+
+  console.log(errorMessage);
 
   function toggleIsShowingPassword() {
     setIsShowingPassword(state => !state);

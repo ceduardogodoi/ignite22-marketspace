@@ -3,6 +3,9 @@ import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Image } from 'expo-image';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import { MSInput } from '../components/MSInput';
 import { MSAvatar } from '../components/MSAvatar';
@@ -13,9 +16,33 @@ import logo from '../assets/logo.png';
 
 const TOP_SPACING = 36;
 
+const signUpSchema = z.object({
+  name: z.string({ required_error: 'Informe seu nome' })
+    .nonempty({ message: 'Informe seu nome' }),
+  email: z.string({ required_error: 'Informe seu e-mail' })
+    .email({ message: 'E-mail inválido' })
+    .nonempty({ message: 'Informe seu e-mail' }),
+  tel: z.string({ required_error: 'Informe seu telefone' })
+    .nonempty({ message: 'Informe seu telefone' }),
+  password: z.string({ required_error: 'Informe uma senha' })
+    .nonempty({ message: 'Informe uma senha' }),
+  confirm_password: z.string({ required_error: 'Informe a confirmação de senha' })
+    .nonempty({ message: 'Informe a confirmação de senha' }),
+});
+
+type SignUpFormData = z.infer<typeof signUpSchema>
+
 export function SignUp() {
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
+
+  const { control, handleSubmit, formState: { errors } } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  function handleCreate(data: SignUpFormData) {
+    console.log(JSON.stringify(data, null, 2));
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -40,11 +67,90 @@ export function SignUp() {
           <Box style={styles.form} mt="8" w="full" alignItems="center">
             <MSAvatar size="20" editable />
 
-            <MSInput placeholder="Nome" fontSize="md" />
-            <MSInput placeholder="E-mail" fontSize="md" keyboardType="email-address" />
-            <MSInput placeholder="Telefone" fontSize="md" keyboardType="phone-pad" />
-            <MSInput placeholder="Senha" secureTextEntry fontSize="md" />
-            <MSInput placeholder="Confirmar senha" secureTextEntry fontSize="md" />
+            <Controller
+              name="name"
+              control={control}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <MSInput
+                  placeholder="Nome"
+                  fontSize="md"
+                  autoCapitalize="words"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  errorMessage={errors.name?.message}
+                />
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <MSInput
+                  placeholder="E-mail"
+                  fontSize="md"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  errorMessage={errors.email?.message}
+                />
+              )}
+            />
+            <Controller
+              name="tel"
+              control={control}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <MSInput
+                  placeholder="Telefone"
+                  fontSize="md"
+                  keyboardType="phone-pad"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  errorMessage={errors.tel?.message}
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <MSInput
+                  placeholder="Senha"
+                  secureTextEntry
+                  // workaround for "Strong Password yellow highlight on iOS"
+                  textContentType="oneTimeCode"
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  fontSize="md"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  errorMessage={errors.password?.message}
+                />
+              )}
+            />
+            <Controller
+              name="confirm_password"
+              control={control}
+              render={({ field: { onBlur, onChange, value } }) => (
+                <MSInput
+                  placeholder="Confirmar senha"
+                  secureTextEntry
+                  // workaround for "Strong Password yellow highlight on iOS"
+                  textContentType="oneTimeCode"
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  fontSize="md"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  errorMessage={errors.confirm_password?.message}
+                />
+              )}
+            />
           </Box>
 
           <Button
@@ -56,6 +162,7 @@ export function SignUp() {
             _pressed={{
               bgColor: 'custom.gray-2',
             }}
+            onPress={handleSubmit(handleCreate)}
           >
             <Text fontWeight="bold" fontSize="sm" color="custom.gray-7">Criar</Text>
           </Button>
