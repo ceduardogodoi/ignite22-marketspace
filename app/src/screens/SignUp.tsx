@@ -43,8 +43,8 @@ export function SignUp() {
             <MSInput placeholder="Nome" fontSize="md" />
             <MSInput placeholder="E-mail" fontSize="md" keyboardType="email-address" />
             <MSInput placeholder="Telefone" fontSize="md" keyboardType="phone-pad" />
-            <MSInput placeholder="Senha" secureTextEntry fontSize="md" keyboardType="visible-password" />
-            <MSInput placeholder="Confirmar senha" secureTextEntry fontSize="md" keyboardType="visible-password" />
+            <MSInput placeholder="Senha" secureTextEntry fontSize="md" />
+            <MSInput placeholder="Confirmar senha" secureTextEntry fontSize="md" />
           </Box>
 
           <Button

@@ -1,17 +1,29 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Button, Heading, Text, VStack } from 'native-base';
-import { Image } from 'expo-image';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
 
 import { MSInput } from '../components/MSInput';
+
+import { RootStackParamList } from '../routes/auth.routes'
 
 import logo from '../assets/logo.png';
 
 const TOP_SPACING = 65;
 
+type AuthRoutesNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
+
 export function SignIn() {
+  const navigation = useNavigation<AuthRoutesNavigationProp>();
+
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
+
+  function handleCreateAccount() {
+    navigation.navigate('SignUp');
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -70,7 +82,7 @@ export function SignIn() {
             Ainda não tem acesso?
           </Text>
 
-          <Button mb="16" p="3" bgColor="custom.gray-5">
+          <Button mb="16" p="3" bgColor="custom.gray-5" onPress={handleCreateAccount}>
             <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">
               Criar uma conta
             </Text>

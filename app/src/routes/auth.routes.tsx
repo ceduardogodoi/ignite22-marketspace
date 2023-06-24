@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SignUp } from '../screens/SignUp';
 import { SignIn } from '../screens/SignIn';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   SignUp: undefined;
   SignIn: undefined;
 };
