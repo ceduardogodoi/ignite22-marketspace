@@ -47,23 +47,19 @@ export function SignIn() {
             Seu espaço de compra e venda
           </Text>
 
-          <VStack>
-            <Text mt="20" mb="4" fontSize="sm" color="custom.gray-2" textAlign="center">
+          <VStack mt="20" space="4">
+            <Text fontSize="sm" color="custom.gray-2" textAlign="center">
               Acesse sua conta
             </Text>
 
             <MSInput
               placeholder="E-mail"
-              w="full"
-              mb="4"
               fontSize="md"
               autoCapitalize="none"
               keyboardType="email-address"
             />
             <MSInput
               placeholder="Senha"
-              w="full"
-              mb="8"
               fontSize="md"
               autoCapitalize="none"
               secureTextEntry

@@ -64,7 +64,7 @@ export function SignUp() {
             Crie sua conta e use o espaço para comprar itens variados e vender seus produtos
           </Text>
 
-          <Box style={styles.form} mt="8" w="full" alignItems="center">
+          <VStack mt="8" w="full" alignItems="center" space="4">
             <MSAvatar size="20" editable />
 
             <Controller
@@ -151,7 +151,7 @@ export function SignUp() {
                 />
               )}
             />
-          </Box>
+          </VStack>
 
           <Button
             mt="6"
@@ -197,9 +197,6 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: theme.colors.custom['gray-6'],
-  },
-  form: {
-    rowGap: 16,
   },
   avatar: {
     width: '100%',
