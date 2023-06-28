@@ -9,4 +9,5 @@
 [X] SignUp screen > Adicionar hook-form e validação com zod
 [X] SignUp screen > Mostrar mensagem de erro de validação embaixo do input
 [X] SignIn screen > Ajustar os inputs que estão sobrepotos
+[X] SignUp screen > Desabilitar botão "Criar" quando formulário estiver em estado inválido
 [ ] SignUp screen > Adição validação e mensagem de erro para o avatar

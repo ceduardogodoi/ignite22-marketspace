@@ -36,7 +36,15 @@ export function SignUp() {
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
 
-  const { control, handleSubmit, formState: { errors } } = useForm<SignUpFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitted,
+      isValid,
+    }
+  } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
   });
 
@@ -159,6 +167,10 @@ export function SignUp() {
             p="3"
             bgColor="custom.gray-1"
             borderRadius={6}
+            isDisabled={isSubmitted && !isValid}
+            _disabled={{
+              bgColor: 'custom.gray-4',
+            }}
             _pressed={{
               bgColor: 'custom.gray-2',
             }}
