@@ -3,6 +3,7 @@ import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Image } from 'expo-image';
+import * as ImagePicker from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -17,6 +18,7 @@ import logo from '../assets/logo.png';
 const TOP_SPACING = 36;
 
 const signUpSchema = z.object({
+  avatarUri: z.string({ required_error: 'Imagem de perfil é obrigatória' }),
   name: z.string({ required_error: 'Informe seu nome' })
     .nonempty({ message: 'Informe seu nome' }),
   email: z.string({ required_error: 'Informe seu e-mail' })
@@ -39,6 +41,9 @@ export function SignUp() {
   const {
     control,
     handleSubmit,
+    setValue,
+    getValues,
+    watch,
     formState: {
       errors,
       isSubmitted,
@@ -47,6 +52,18 @@ export function SignUp() {
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
   });
+
+  const avatarUri = watch('avatarUri');
+
+  async function handlePickImage() {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+
+    if (!result.canceled) {
+      setValue('avatarUri', result.assets[0].uri);
+    }
+  }
 
   function handleCreate(data: SignUpFormData) {
     console.log(JSON.stringify(data, null, 2));
@@ -73,7 +90,13 @@ export function SignUp() {
           </Text>
 
           <VStack mt="8" w="full" alignItems="center" space="4">
-            <MSAvatar size="20" editable />
+            <MSAvatar
+              size="20"
+              editable
+              onPress={handlePickImage}
+              errorMessage={errors.avatarUri?.message}
+              imageUrl={avatarUri}
+            />
 
             <Controller
               name="name"
