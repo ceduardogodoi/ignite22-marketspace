@@ -17,6 +17,8 @@ import logo from '../assets/logo.png';
 
 const TOP_SPACING = 36;
 
+type onChangeImage = (imageUri: string) => void
+
 const signUpSchema = z.object({
   avatarUri: z.string({ required_error: 'Imagem de perfil é obrigatória' }),
   name: z.string({ required_error: 'Informe seu nome' })
@@ -41,9 +43,6 @@ export function SignUp() {
   const {
     control,
     handleSubmit,
-    setValue,
-    getValues,
-    watch,
     formState: {
       errors,
       isSubmitted,
@@ -53,15 +52,13 @@ export function SignUp() {
     resolver: zodResolver(signUpSchema),
   });
 
-  const avatarUri = watch('avatarUri');
-
-  async function handlePickImage() {
+  async function handlePickImage(onChange: onChangeImage) {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
 
     if (!result.canceled) {
-      setValue('avatarUri', result.assets[0].uri);
+      onChange(result.assets[0].uri);
     }
   }
 
@@ -90,12 +87,18 @@ export function SignUp() {
           </Text>
 
           <VStack mt="8" w="full" alignItems="center" space="4">
-            <MSAvatar
-              size="20"
-              editable
-              onPress={handlePickImage}
-              errorMessage={errors.avatarUri?.message}
-              imageUrl={avatarUri}
+            <Controller
+              name="avatarUri"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <MSAvatar
+                  size="20"
+                  editable
+                  onPress={() => handlePickImage(onChange)}
+                  errorMessage={errors.avatarUri?.message}
+                  imageUrl={value}
+                />
+              )}
             />
 
             <Controller
