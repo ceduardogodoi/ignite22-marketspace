@@ -11,4 +11,4 @@
 [X] SignIn screen > Ajustar os inputs que estão sobrepotos
 [X] SignUp screen > Desabilitar botão "Criar" quando formulário estiver em estado inválido
 [X] SignUp screen > Adiciona validação e mensagem de erro para o avatar
-[ ] SignUp screen > Senha e confirmação devem ser iguais
+[X] SignUp screen > Senha e confirmação devem ser iguais
