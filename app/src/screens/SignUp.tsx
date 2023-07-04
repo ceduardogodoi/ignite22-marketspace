@@ -28,13 +28,30 @@ const signUpSchema = z.object({
     .nonempty({ message: 'Informe seu e-mail' }),
   tel: z.string({ required_error: 'Informe seu telefone' })
     .nonempty({ message: 'Informe seu telefone' }),
+  // password: z.string({ required_error: 'Informe uma senha' })
+  //   .nonempty({ message: 'Informe uma senha' }),
+  // confirm_password: z.string({ required_error: 'Informe a confirmação de senha' })
+  //   .nonempty({ message: 'Informe a confirmação de senha' }),
+})
+// .refine(data => data.password === data.confirm_password, {
+//   message: 'Confirmação de senha não confere',
+//   path: ['confirm_password'],
+// });
+
+const passwordsSchema = z.object({
   password: z.string({ required_error: 'Informe uma senha' })
     .nonempty({ message: 'Informe uma senha' }),
   confirm_password: z.string({ required_error: 'Informe a confirmação de senha' })
     .nonempty({ message: 'Informe a confirmação de senha' }),
-});
+})
+  .refine(data => data.password === data.confirm_password, {
+    message: 'Confirmação de senha não confere',
+    path: ['confirm_password'],
+  });
 
-type SignUpFormData = z.infer<typeof signUpSchema>
+const signUpFormSchema = z.intersection(signUpSchema, passwordsSchema);
+
+type SignUpFormData = z.infer<typeof signUpFormSchema>;
 
 export function SignUp() {
   const insets = useSafeAreaInsets();
@@ -49,7 +66,7 @@ export function SignUp() {
       isValid,
     }
   } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(signUpFormSchema),
   });
 
   async function handlePickImage(onChange: onChangeImage) {
