@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { Box, Button, Heading, Text, VStack } from 'native-base';
+import { Box, Button, Heading, Text, useToast, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Image } from 'expo-image';
@@ -14,6 +14,8 @@ import { MSAvatar } from '../components/MSAvatar';
 import { theme } from '../../config/theme';
 
 import { usersService } from '../services/Users';
+
+import { AppError } from '../utils/AppError';
 
 import logo from '../assets/logo.png';
 
@@ -59,6 +61,8 @@ export function SignUp() {
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
 
+  const toast = useToast();
+
   const {
     control,
     handleSubmit,
@@ -82,7 +86,21 @@ export function SignUp() {
   }
 
   async function handleCreate(data: SignUpFormData) {
-    await usersService.create(data);
+    try {
+      await usersService.create(data);
+    } catch (error) {
+      let title = 'Não foi possível criar a conta. Tente novamente mais tarde.'
+
+      if (error instanceof AppError) {
+        title = error.message;
+      }
+
+      toast.show({
+        title,
+        placement: 'top',
+        backgroundColor: 'custom.red-light',
+      });
+    }
   }
 
   return (

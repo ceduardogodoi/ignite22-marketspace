@@ -12,3 +12,6 @@
 [X] SignUp screen > Desabilitar botão "Criar" quando formulário estiver em estado inválido
 [X] SignUp screen > Adiciona validação e mensagem de erro para o avatar
 [X] SignUp screen > Senha e confirmação devem ser iguais
+[X] SignUp screen > Cria usuário
+[X] SignUp screen > Tratar erros de requisição
+[ ] SignUp screen > Redirecionar para SignIn
