@@ -13,6 +13,8 @@ import { MSAvatar } from '../components/MSAvatar';
 
 import { theme } from '../../config/theme';
 
+import { usersService } from '../services/Users';
+
 import logo from '../assets/logo.png';
 
 const TOP_SPACING = 36;
@@ -20,7 +22,7 @@ const TOP_SPACING = 36;
 type onChangeImage = (imageUri: string) => void
 
 const signUpSchema = z.object({
-  avatarUri: z.string({ required_error: 'Imagem de perfil é obrigatória' }),
+  avatar: z.string({ required_error: 'Imagem de perfil é obrigatória' }),
   name: z.string({ required_error: 'Informe seu nome' })
     .nonempty({ message: 'Informe seu nome' }),
   email: z.string({ required_error: 'Informe seu e-mail' })
@@ -79,8 +81,8 @@ export function SignUp() {
     }
   }
 
-  function handleCreate(data: SignUpFormData) {
-    console.log(JSON.stringify(data, null, 2));
+  async function handleCreate(data: SignUpFormData) {
+    await usersService.create(data);
   }
 
   return (
@@ -105,14 +107,14 @@ export function SignUp() {
 
           <VStack mt="8" w="full" alignItems="center" space="4">
             <Controller
-              name="avatarUri"
+              name="avatar"
               control={control}
               render={({ field: { value, onChange } }) => (
                 <MSAvatar
                   size="20"
                   editable
                   onPress={() => handlePickImage(onChange)}
-                  errorMessage={errors.avatarUri?.message}
+                  errorMessage={errors.avatar?.message}
                   imageUrl={value}
                 />
               )}
