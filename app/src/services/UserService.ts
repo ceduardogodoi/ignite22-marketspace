@@ -10,7 +10,7 @@ interface UserDTO {
   password: string;
 }
 
-class UsersService {
+class UserService {
   async create({ avatar, name, email, tel, password }: UserDTO) {
     const fileExtension = avatar.split('.').pop() ?? '*';
 
@@ -36,6 +36,6 @@ class UsersService {
   }
 }
 
-const usersService = new UsersService();
+const userService = new UserService();
 
-export { usersService };
+export { userService };

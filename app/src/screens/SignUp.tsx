@@ -13,7 +13,7 @@ import { MSAvatar } from '../components/MSAvatar';
 
 import { theme } from '../../config/theme';
 
-import { usersService } from '../services/Users';
+import { useAppContext } from '../contexts';
 
 import { AppError } from '../utils/AppError';
 
@@ -55,9 +55,11 @@ const passwordsSchema = z.object({
 
 const signUpFormSchema = z.intersection(signUpSchema, passwordsSchema);
 
-type SignUpFormData = z.infer<typeof signUpFormSchema>;
+export type SignUpFormData = z.infer<typeof signUpFormSchema>;
 
 export function SignUp() {
+  const context = useAppContext();
+
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
 
@@ -87,9 +89,9 @@ export function SignUp() {
 
   async function handleCreate(data: SignUpFormData) {
     try {
-      await usersService.create(data);
+      await context.signUp(data);
     } catch (error) {
-      let title = 'Não foi possível criar a conta. Tente novamente mais tarde.'
+      let title = 'Não foi possível criar a conta. Tente novamente mais tarde.';
 
       if (error instanceof AppError) {
         title = error.message;

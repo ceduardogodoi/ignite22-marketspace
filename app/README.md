@@ -14,4 +14,6 @@
 [X] SignUp screen > Senha e confirmação devem ser iguais
 [X] SignUp screen > Cria usuário
 [X] SignUp screen > Tratar erros de requisição
-[ ] SignUp screen > Redirecionar para SignIn
+[X] SignUp screen > Criar sessão com usuário recém criado
+[ ] SignUp screen > Verificar instabilidade de mensagem de erro ao criar usuário
+[ ] SignUp screen > Redirecionar para Home (rotas da aplicação)

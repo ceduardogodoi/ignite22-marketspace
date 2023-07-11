@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Routes } from './src/routes';
 
 import { theme } from './config/theme';
+import { AppContextProvider } from './src/contexts';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +23,9 @@ export default function App() {
         <SafeAreaProvider>
           <StatusBar style="auto" />
 
-          <Routes />
+          <AppContextProvider>
+            <Routes />
+          </AppContextProvider>
         </SafeAreaProvider>
       </NativeBaseProvider>
     </GestureHandlerRootView>
