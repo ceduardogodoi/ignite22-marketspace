@@ -15,5 +15,7 @@
 [X] SignUp screen > Cria usuário
 [X] SignUp screen > Tratar erros de requisição
 [X] SignUp screen > Criar sessão com usuário recém criado
-[ ] SignUp screen > Verificar instabilidade de mensagem de erro ao criar usuário
-[ ] SignUp screen > Redirecionar para Home (rotas da aplicação)
+[X] SignUp screen > Verificar instabilidade de mensagem de erro ao criar usuário
+[X] SignUp screen > Redirecionar para Home (rotas da aplicação)
+
+[] Home screen > Deslogar usuário
