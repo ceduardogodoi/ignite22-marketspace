@@ -7,7 +7,7 @@ interface CreateSessionProps {
   password: string;
 }
 
-interface Session {
+export interface Session {
   token: string;
   user: {
     id: string;
@@ -18,6 +18,7 @@ interface Session {
     created_at: string;
     updated_at: string;
   };
+  'refresh-token': string;
 }
 
 class SessionService {

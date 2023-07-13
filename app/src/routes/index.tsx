@@ -7,11 +7,11 @@ import { TabRoutes } from './tab.routes';
 
 export function Routes() {
   const isAuthenticated = false;
-  const { user } = useAppContext();
+  const { session } = useAppContext();
 
   return (
     <NavigationContainer>
-      {!isAuthenticated ? (
+      {!session?.user.id ? (
         <AuthRoutes />
       ) : (
         <TabRoutes />
