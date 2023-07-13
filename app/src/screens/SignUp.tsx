@@ -13,7 +13,7 @@ import { MSAvatar } from '../components/MSAvatar';
 
 import { theme } from '../../config/theme';
 
-import { useAppContext } from '../contexts';
+import { useStore } from '../store';
 
 import { AppError } from '../utils/AppError';
 
@@ -58,7 +58,7 @@ const signUpFormSchema = z.intersection(signUpSchema, passwordsSchema);
 export type SignUpFormData = z.infer<typeof signUpFormSchema>;
 
 export function SignUp() {
-  const context = useAppContext();
+  const context = useStore();
 
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;

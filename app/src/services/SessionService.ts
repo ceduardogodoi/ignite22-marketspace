@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 
 import { http } from '../libs/axios';
 
-interface CreateSessionProps {
+interface CreateSessionData {
   email: string;
   password: string;
 }
@@ -22,11 +22,11 @@ export interface Session {
 }
 
 class SessionService {
-  async create({ email, password }: CreateSessionProps) {
+  async create({ email, password }: CreateSessionData) {
     const response = await http.post<
       Session,
-      AxiosResponse<Session, CreateSessionProps>,
-      CreateSessionProps
+      AxiosResponse<Session, CreateSessionData>,
+      CreateSessionData
     >('/sessions', {
       email,
       password,

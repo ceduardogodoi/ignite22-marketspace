@@ -5,9 +5,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { Routes } from './src/routes';
+import { AppContextProvider } from './src/store';
 
 import { theme } from './config/theme';
-import { AppContextProvider } from './src/contexts';
 
 export default function App() {
   const [fontsLoaded] = useFonts({

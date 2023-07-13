@@ -1,13 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 
-import { useAppContext } from '../contexts';
+import { useStore } from '../store';
 
 import { AuthRoutes } from './auth.routes';
 import { TabRoutes } from './tab.routes';
 
 export function Routes() {
-  const isAuthenticated = false;
-  const { session } = useAppContext();
+  const { session } = useStore();
 
   return (
     <NavigationContainer>
