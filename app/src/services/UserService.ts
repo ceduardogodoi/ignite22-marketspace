@@ -25,7 +25,7 @@ class UserService {
     formData.append('tel', tel);
     formData.append('password', password);
 
-    await http.post<void, AxiosResponse<void, UserDTO>>(
+    await http.post<void, AxiosResponse<void, UserDTO>, FormData>(
       '/users',
       formData,
       {

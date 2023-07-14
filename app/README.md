@@ -30,6 +30,8 @@
 
 [X] SignUp screen > Redirecionar para Home (rotas da aplicação)
 
+[X] SignUp screen > Mostrar mensagem de usuário criado com sucesso
+
 [ ] Home screen > Deslogar usuário
 
 ---

@@ -5,6 +5,7 @@ import {
   useMemo,
   useReducer,
 } from 'react';
+import { useToast } from 'native-base';
 
 import { userService } from '../services/UserService';
 import { Session, sessionService } from '../services/SessionService';
@@ -12,6 +13,8 @@ import { Session, sessionService } from '../services/SessionService';
 import { createSession, reducer } from './reducer';
 
 import { SignUpFormData } from '../screens/SignUp';
+
+import { AppError } from '../utils/AppError';
 
 export type StoreData = {
   session?: Session | null;
@@ -29,15 +32,37 @@ const AppStoreContext = createContext({} as Store);
 export function AppContextProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const toast = useToast();
+
   async function signUp(data: SignUpFormData) {
-    await userService.create(data);
+    try {
+      await userService.create(data);
+  
+      const session = await sessionService.create({
+        email: data.email,
+        password: data.password,
+      });
 
-    const session = await sessionService.create({
-      email: data.email,
-      password: data.password,
-    });
+      toast.show({
+        title: 'Usuário criado com sucesso',
+        placement: 'top',
+        backgroundColor: 'green.500',
+      })
+  
+      dispatch(createSession(session));
+    } catch (error) {
+      let title = 'Não foi possível criar a conta. Tente novamente mais tarde.';
 
-    dispatch(createSession(session));
+      if (error instanceof AppError) {
+        title = error.message;
+      }
+
+      toast.show({
+        title,
+        placement: 'top',
+        backgroundColor: 'custom.red-light',
+      });
+    }
   }
 
   const store = useMemo<Store>(() => {

@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { Box, Button, Heading, Text, useToast, VStack } from 'native-base';
+import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Image } from 'expo-image';
@@ -14,8 +14,6 @@ import { MSAvatar } from '../components/MSAvatar';
 import { theme } from '../../config/theme';
 
 import { useStore } from '../store';
-
-import { AppError } from '../utils/AppError';
 
 import logo from '../assets/logo.png';
 
@@ -32,15 +30,7 @@ const signUpSchema = z.object({
     .nonempty({ message: 'Informe seu e-mail' }),
   tel: z.string({ required_error: 'Informe seu telefone' })
     .nonempty({ message: 'Informe seu telefone' }),
-  // password: z.string({ required_error: 'Informe uma senha' })
-  //   .nonempty({ message: 'Informe uma senha' }),
-  // confirm_password: z.string({ required_error: 'Informe a confirmação de senha' })
-  //   .nonempty({ message: 'Informe a confirmação de senha' }),
 })
-// .refine(data => data.password === data.confirm_password, {
-//   message: 'Confirmação de senha não confere',
-//   path: ['confirm_password'],
-// });
 
 const passwordsSchema = z.object({
   password: z.string({ required_error: 'Informe uma senha' })
@@ -62,8 +52,6 @@ export function SignUp() {
 
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
-
-  const toast = useToast();
 
   const {
     control,
@@ -88,21 +76,7 @@ export function SignUp() {
   }
 
   async function handleCreate(data: SignUpFormData) {
-    try {
-      await context.signUp(data);
-    } catch (error) {
-      let title = 'Não foi possível criar a conta. Tente novamente mais tarde.';
-
-      if (error instanceof AppError) {
-        title = error.message;
-      }
-
-      toast.show({
-        title,
-        placement: 'top',
-        backgroundColor: 'custom.red-light',
-      });
-    }
+    await context.signUp(data);
   }
 
   return (
