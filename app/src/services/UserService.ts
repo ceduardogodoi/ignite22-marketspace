@@ -2,16 +2,10 @@ import { AxiosResponse } from 'axios';
 
 import { http } from '../libs/axios';
 
-interface UserDTO {
-  avatar: string;
-  name: string;
-  email: string;
-  tel: string;
-  password: string;
-}
+import { CreateUserDTO } from '../dtos/User';
 
 class UserService {
-  async create({ avatar, name, email, tel, password }: UserDTO) {
+  async create({ avatar, name, email, tel, password }: CreateUserDTO) {
     const fileExtension = avatar.split('.').pop() ?? '*';
 
     const formData = new FormData();
@@ -25,7 +19,7 @@ class UserService {
     formData.append('tel', tel);
     formData.append('password', password);
 
-    await http.post<void, AxiosResponse<void, UserDTO>, FormData>(
+    await http.post<void, AxiosResponse<void, CreateUserDTO>, FormData>(
       '/users',
       formData,
       {

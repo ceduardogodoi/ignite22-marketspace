@@ -18,7 +18,7 @@ export interface Session {
     created_at: string;
     updated_at: string;
   };
-  'refresh-token': string;
+  'refresh_token': string;
 }
 
 class SessionService {

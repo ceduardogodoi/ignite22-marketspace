@@ -32,6 +32,10 @@
 
 [X] SignUp screen > Mostrar mensagem de usuário criado com sucesso
 
+[ ] SignUp > Armazenar dado do usuário no AsyncStorage para que ele fique logado ao dar refresh
+
+[?] Separar reducer/actions/action creators
+ 
 [ ] Home screen > Deslogar usuário
 
 ---
