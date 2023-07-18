@@ -6,11 +6,16 @@ import { Session } from '../../services/SessionService';
 enum ActionTypes {
   CREATE_SESSION = 'session/create',
   LOGOUT_SESSION = 'session/logOut',
+  LOAD_SESSION = 'session/load',
 }
 
 type Action =
   | {
     type: ActionTypes.CREATE_SESSION,
+    payload: Session,
+  }
+  | {
+    type: ActionTypes.LOAD_SESSION,
     payload: Session,
   }
   | {
@@ -25,6 +30,13 @@ export function createSession(session: Session): Action {
   }
 }
 
+export function loadSession(session: Session): Action {
+  return {
+    type: ActionTypes.LOAD_SESSION,
+    payload: session,
+  }
+}
+
 // Reducer
 export function reducer(state: StoreData, action: Action): StoreData {
   switch (action.type) {
@@ -35,6 +47,15 @@ export function reducer(state: StoreData, action: Action): StoreData {
         ...state,
         session,
       };
+    }
+
+    case ActionTypes.LOAD_SESSION: {
+      const session = action.payload;
+
+      return {
+        ...state,
+        session,
+      }
     }
 
     case ActionTypes.LOGOUT_SESSION: {

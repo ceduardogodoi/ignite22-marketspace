@@ -11,7 +11,7 @@ import { useToast } from 'native-base';
 import { userService } from '../services/UserService';
 import { Session, sessionService } from '../services/SessionService';
 
-import { createSession, reducer } from './reducer';
+import { createSession, loadSession, reducer } from './reducer';
 
 import * as storage from '../storage'
 
@@ -75,9 +75,15 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     }
   }
 
-  async function loadUserData() {
+  async function loadSignedInUser() {
+    const { token, refresh_token } = await storage.getAuthTokens();
     const user = await storage.getUser();
-    console.log('loadUserData::', JSON.stringify(user, null, 2));
+
+    dispatch(loadSession({
+      token,
+      user,
+      refresh_token,
+    }))
   }
 
   const store = useMemo<Store>(() => {
@@ -88,7 +94,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   }, [state.session]);
 
   useEffect(() => {
-    loadUserData();
+    loadSignedInUser();
   }, []);
 
   return (

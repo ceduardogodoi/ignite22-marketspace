@@ -32,7 +32,9 @@
 
 [X] SignUp screen > Mostrar mensagem de usuário criado com sucesso
 
-[ ] SignUp > Armazenar dado do usuário no AsyncStorage para que ele fique logado ao dar refresh
+[X] SignUp > Armazenar dado do usuário no AsyncStorage para que ele fique logado ao dar refresh
+
+[X] SignUp > Recarregar session e usuário salvo na store, caso tenha
 
 [?] Separar reducer/actions/action creators
  
