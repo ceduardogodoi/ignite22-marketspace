@@ -23,18 +23,24 @@ type Action =
   }
 
 // Action Creators
-export function createSession(session: Session): Action {
+export function createSessionAction(session: Session): Action {
   return {
     type: ActionTypes.CREATE_SESSION,
     payload: session,
-  }
+  };
 }
 
-export function loadSession(session: Session): Action {
+export function loadSessionAction(session: Session): Action {
   return {
     type: ActionTypes.LOAD_SESSION,
     payload: session,
-  }
+  };
+}
+
+export function signOutAction(): Action {
+  return {
+    type: ActionTypes.LOGOUT_SESSION,
+  };
 }
 
 // Reducer
@@ -59,7 +65,7 @@ export function reducer(state: StoreData, action: Action): StoreData {
     }
 
     case ActionTypes.LOGOUT_SESSION: {
-      return state;
+      return {};
     }
 
     default: {

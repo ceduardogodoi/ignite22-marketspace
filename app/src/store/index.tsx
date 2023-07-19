@@ -11,7 +11,7 @@ import { useToast } from 'native-base';
 import { userService } from '../services/UserService';
 import { Session, sessionService } from '../services/SessionService';
 
-import { createSession, loadSession, reducer } from './reducer';
+import { createSessionAction, loadSessionAction, reducer, signOutAction } from './reducer';
 
 import * as storage from '../storage'
 
@@ -25,6 +25,7 @@ export type StoreData = {
 
 type StoreFunctions = {
   signUp(data: SignUpFormData): Promise<void>;
+  signOut(): Promise<void>;
 }
 
 type Store = StoreData & StoreFunctions;
@@ -46,7 +47,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         password: data.password,
       });
 
-      dispatch(createSession(session));
+      dispatch(createSessionAction(session));
 
       await storage.saveAuthTokens({
         token: session.token,
@@ -76,20 +77,31 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   }
 
   async function loadSignedInUser() {
-    const { token, refresh_token } = await storage.getAuthTokens();
+    const authTokens = await storage.getAuthTokens();
     const user = await storage.getUser();
 
-    dispatch(loadSession({
-      token,
-      user,
-      refresh_token,
-    }))
+    if (authTokens && user) {
+      const { token, refresh_token } = authTokens;
+
+      dispatch(loadSessionAction({
+        token,
+        user,
+        refresh_token,
+      }));
+    }
+  }
+
+  async function signOut() {
+    dispatch(signOutAction());
+
+    await storage.signOut();
   }
 
   const store = useMemo<Store>(() => {
     return {
       session: state.session,
       signUp,
+      signOut,
     };
   }, [state.session]);
 

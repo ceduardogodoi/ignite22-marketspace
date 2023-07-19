@@ -12,13 +12,17 @@ export async function saveAuthTokens({ token, refresh_token }: StorageAuthTokens
   await AsyncStorage.setItem(STORAGE_AUTH_TOKEN, value);
 }
 
-export async function getAuthTokens(): Promise<StorageAuthTokens> {
+export async function getAuthTokens(): Promise<StorageAuthTokens | null> {
   const response = await AsyncStorage.getItem(STORAGE_AUTH_TOKEN);
-  const { token, refresh_token }: StorageAuthTokens = response ? JSON.parse(response) : {};
+  const authTokens: StorageAuthTokens | null = response ? JSON.parse(response) : null;
 
-  return { token, refresh_token };
+  return authTokens;
 }
 
 export async function removeAuthTokens(): Promise<void> {
   await AsyncStorage.removeItem(STORAGE_AUTH_TOKEN);
+}
+
+export async function signOut() {
+  await AsyncStorage.clear();
 }
