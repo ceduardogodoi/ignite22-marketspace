@@ -80,11 +80,11 @@ export function MSInput({
         )}
       </HStack>
 
-      <VStack mt="1">
-        {errorMessage && (
+      {errorMessage && (
+        <VStack mt="1">
           <Text color="custom.red-light">{errorMessage}</Text>
-        )}
-      </VStack>
+        </VStack>
+      )}
     </VStack>
   );
 }

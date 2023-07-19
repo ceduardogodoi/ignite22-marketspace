@@ -1,4 +1,6 @@
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -10,6 +12,8 @@ import { z } from 'zod';
 
 import { MSInput } from '../components/MSInput';
 import { MSAvatar } from '../components/MSAvatar';
+
+import { RootStackParamList } from '../routes/auth.routes';
 
 import { theme } from '../../config/theme';
 
@@ -43,11 +47,15 @@ const passwordsSchema = z.object({
     path: ['confirm_password'],
   });
 
+type AuthRoutesNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
+
 const signUpFormSchema = z.intersection(signUpSchema, passwordsSchema);
 
 export type SignUpFormData = z.infer<typeof signUpFormSchema>;
 
 export function SignUp() {
+  const navigation = useNavigation<AuthRoutesNavigationProp>();
+
   const context = useStore();
 
   const insets = useSafeAreaInsets();
@@ -77,6 +85,10 @@ export function SignUp() {
 
   async function handleCreate(data: SignUpFormData) {
     await context.signUp(data);
+  }
+
+  function handleGoToLogin() {
+    navigation.navigate('SignIn');
   }
 
   return (
@@ -230,6 +242,7 @@ export function SignUp() {
             _pressed={{
               bgColor: 'custom.gray-4',
             }}
+            onPress={handleGoToLogin}
           >
             <Text fontWeight="bold" fontSize="sm" color="custom.gray-2">Ir para o login</Text>
           </Button>
