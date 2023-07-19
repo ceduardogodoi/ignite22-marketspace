@@ -15,6 +15,7 @@ import { createSessionAction, loadSessionAction, reducer, signOutAction } from '
 
 import * as storage from '../storage'
 
+import { SignInFormData } from '../screens/SignIn';
 import { SignUpFormData } from '../screens/SignUp';
 
 import { AppError } from '../utils/AppError';
@@ -24,6 +25,7 @@ export type StoreData = {
 }
 
 type StoreFunctions = {
+  signIn(data: SignInFormData): Promise<void>;
   signUp(data: SignUpFormData): Promise<void>;
   signOut(): Promise<void>;
 }
@@ -38,10 +40,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
 
   const toast = useToast();
 
-  async function signUp(data: SignUpFormData) {
+  async function signIn(data: SignInFormData) {
     try {
-      await userService.create(data);
-
       const session = await sessionService.create({
         email: data.email,
         password: data.password,
@@ -55,6 +55,35 @@ export function AppContextProvider({ children }: PropsWithChildren) {
       });
 
       await storage.saveUser(session.user);
+
+      toast.show({
+        title: 'Usuário logado com sucesso',
+        placement: 'top',
+        backgroundColor: 'green.500',
+      });
+    } catch (error) {
+      let title = 'Não foi possível logar. Tente novamente mais tarde.';
+
+      if (error instanceof AppError) {
+        title = error.message;
+      }
+
+      toast.show({
+        title,
+        placement: 'top',
+        backgroundColor: 'custom.red-light',
+      });
+    }
+  }
+
+  async function signUp(data: SignUpFormData) {
+    try {
+      await userService.create(data);
+
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
 
       toast.show({
         title: 'Usuário criado com sucesso',
@@ -100,6 +129,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   const store = useMemo<Store>(() => {
     return {
       session: state.session,
+      signIn,
       signUp,
       signOut,
     };

@@ -12,6 +12,8 @@ import { MSInput } from '../components/MSInput';
 
 import { RootStackParamList } from '../routes/auth.routes'
 
+import { useStore } from '../store';
+
 import logo from '../assets/logo.png';
 
 const TOP_SPACING = 65;
@@ -28,13 +30,15 @@ const signInSchema = z.object({
     .nonempty({ message: 'Senha não pode ser vazia' })
 });
 
-type SignInFormData = {
+export type SignInFormData = {
   email: string;
   password: string;
 }
 
 export function SignIn() {
   const navigation = useNavigation<AuthRoutesNavigationProp>();
+
+  const context = useStore();
 
   const {
     control,
@@ -47,8 +51,8 @@ export function SignIn() {
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
 
-  function handleSignIn(data: SignInFormData) {
-    console.log(data);
+  async function handleSignIn(data: SignInFormData) {
+    await context.signIn(data);
   }
 
   function handleCreateAccount() {

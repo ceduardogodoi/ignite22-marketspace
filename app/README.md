@@ -38,7 +38,9 @@
 
 [X] Home screen > Deslogar usuário
 
-[ ] SigIn > Logar usuário
+[X] SigIn > Logar usuário
+
+[ ] SignUp & SignIn > Mostrar loading enquanto processa informações
  
 [?] Separar reducer/actions/action creators
 
