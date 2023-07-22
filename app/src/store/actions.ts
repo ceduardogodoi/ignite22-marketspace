@@ -1,9 +1,7 @@
-import { StoreData } from '..';
-
-import { Session } from '../../services/SessionService';
+import { Session } from '../services/SessionService';
 
 // Action Types
-enum ActionTypes {
+export enum ActionTypes {
   CREATE_SESSION = 'session/create',
   LOGOUT_SESSION = 'session/logOut',
   LOAD_SESSION = 'session/load',
@@ -11,7 +9,7 @@ enum ActionTypes {
   END_SESSION_LOADING = 'session/endSessionLoading',
 }
 
-type Action =
+export type Action =
   | {
     type: ActionTypes.CREATE_SESSION,
     payload: Session,
@@ -61,49 +59,4 @@ export function endSessionLoading(): Action {
   return {
     type: ActionTypes.END_SESSION_LOADING,
   };
-}
-
-// Reducer
-export function reducer(state: StoreData, action: Action): StoreData {
-  switch (action.type) {
-    case ActionTypes.CREATE_SESSION: {
-      const session = action.payload;
-
-      return {
-        ...state,
-        session,
-      };
-    }
-
-    case ActionTypes.LOAD_SESSION: {
-      const session = action.payload;
-
-      return {
-        ...state,
-        session,
-      }
-    }
-
-    case ActionTypes.LOGOUT_SESSION: {
-      return {};
-    }
-
-    case ActionTypes.START_SESSION_LOADING: {
-      return {
-        ...state,
-        isSessionLoading: true,
-      }
-    }
-
-    case ActionTypes.END_SESSION_LOADING: {
-      return {
-        ...state,
-        isSessionLoading: false,
-      }
-    }
-
-    default: {
-      return state;
-    }
-  }
 }

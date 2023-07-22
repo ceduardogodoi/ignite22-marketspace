@@ -11,14 +11,14 @@ import { useToast } from 'native-base';
 import { userService } from '../services/UserService';
 import { Session, sessionService } from '../services/SessionService';
 
+import { reducer } from './reducer';
 import {
   createSessionAction,
+  endSessionLoading,
   loadSessionAction,
-  reducer,
   signOutAction,
   startSessionLoading,
-  endSessionLoading,
-} from './reducer';
+} from './actions';
 
 import * as storage from '../storage'
 

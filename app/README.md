@@ -42,7 +42,11 @@
 
 [X] SignUp & SignIn > Mostrar loading enquanto processa informações
 
-[?] Separar reducer/actions/action creators
+[X] Separar reducer/actions/action creators
+
+[ ] Home > carregar informações do usuário
+
+- Imagem, nome, anúncios
 
 ---
 
