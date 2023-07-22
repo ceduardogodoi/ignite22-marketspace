@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 import { MSInput } from '../components/MSInput';
 
-import { RootStackParamList } from '../routes/auth.routes'
+import { AuthRootStackParamList } from '../routes/auth.routes'
 
 import { useStore } from '../store';
 
@@ -18,7 +18,7 @@ import logo from '../assets/logo.png';
 
 const TOP_SPACING = 65;
 
-type AuthRoutesNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
+type AuthRoutesNavigationProp = NativeStackNavigationProp<AuthRootStackParamList, 'SignIn'>;
 
 const signInSchema = z.object({
   email: z

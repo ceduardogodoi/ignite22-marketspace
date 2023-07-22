@@ -50,8 +50,6 @@
 
 [ ] Home > Criar novo anúncio
 
-- Imagem, nome, anúncios
-
 ---
 
 Extras

@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { MSInput } from '../components/MSInput';
 import { MSAvatar } from '../components/MSAvatar';
 
-import { RootStackParamList } from '../routes/auth.routes';
+import { AuthRootStackParamList } from '../routes/auth.routes';
 
 import { theme } from '../../config/theme';
 
@@ -47,7 +47,7 @@ const passwordsSchema = z.object({
     path: ['confirm_password'],
   });
 
-type AuthRoutesNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SignUp'>;
+type AuthRoutesNavigationProp = NativeStackNavigationProp<AuthRootStackParamList, 'SignUp'>;
 
 const signUpFormSchema = z.intersection(signUpSchema, passwordsSchema);
 
