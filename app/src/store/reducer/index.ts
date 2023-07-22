@@ -7,6 +7,8 @@ enum ActionTypes {
   CREATE_SESSION = 'session/create',
   LOGOUT_SESSION = 'session/logOut',
   LOAD_SESSION = 'session/load',
+  START_SESSION_LOADING = 'session/startSessionLoading',
+  END_SESSION_LOADING = 'session/endSessionLoading',
 }
 
 type Action =
@@ -20,6 +22,12 @@ type Action =
   }
   | {
     type: ActionTypes.LOGOUT_SESSION,
+  }
+  | {
+    type: ActionTypes.START_SESSION_LOADING,
+  }
+  | {
+    type: ActionTypes.END_SESSION_LOADING,
   }
 
 // Action Creators
@@ -40,6 +48,18 @@ export function loadSessionAction(session: Session): Action {
 export function signOutAction(): Action {
   return {
     type: ActionTypes.LOGOUT_SESSION,
+  };
+}
+
+export function startSessionLoading(): Action {
+  return {
+    type: ActionTypes.START_SESSION_LOADING,
+  };
+}
+
+export function endSessionLoading(): Action {
+  return {
+    type: ActionTypes.END_SESSION_LOADING,
   };
 }
 
@@ -66,6 +86,20 @@ export function reducer(state: StoreData, action: Action): StoreData {
 
     case ActionTypes.LOGOUT_SESSION: {
       return {};
+    }
+
+    case ActionTypes.START_SESSION_LOADING: {
+      return {
+        ...state,
+        isSessionLoading: true,
+      }
+    }
+
+    case ActionTypes.END_SESSION_LOADING: {
+      return {
+        ...state,
+        isSessionLoading: false,
+      }
     }
 
     default: {

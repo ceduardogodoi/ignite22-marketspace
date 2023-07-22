@@ -11,7 +11,14 @@ import { useToast } from 'native-base';
 import { userService } from '../services/UserService';
 import { Session, sessionService } from '../services/SessionService';
 
-import { createSessionAction, loadSessionAction, reducer, signOutAction } from './reducer';
+import {
+  createSessionAction,
+  loadSessionAction,
+  reducer,
+  signOutAction,
+  startSessionLoading,
+  endSessionLoading,
+} from './reducer';
 
 import * as storage from '../storage'
 
@@ -22,6 +29,7 @@ import { AppError } from '../utils/AppError';
 
 export type StoreData = {
   session?: Session | null;
+  isSessionLoading?: boolean;
 }
 
 type StoreFunctions = {
@@ -32,7 +40,9 @@ type StoreFunctions = {
 
 type Store = StoreData & StoreFunctions;
 
-const initialState: StoreData = {};
+const initialState: StoreData = {
+  isSessionLoading: false,
+};
 const AppStoreContext = createContext({} as Store);
 
 export function AppContextProvider({ children }: PropsWithChildren) {
@@ -106,6 +116,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   }
 
   async function loadSignedInUser() {
+    dispatch(startSessionLoading());
+
     const authTokens = await storage.getAuthTokens();
     const user = await storage.getUser();
 
@@ -118,6 +130,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         refresh_token,
       }));
     }
+
+    dispatch(endSessionLoading());
   }
 
   async function signOut() {
@@ -129,11 +143,12 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   const store = useMemo<Store>(() => {
     return {
       session: state.session,
+      isSessionLoading: state.isSessionLoading,
       signIn,
       signUp,
       signOut,
     };
-  }, [state.session]);
+  }, [state.session, state.isSessionLoading]);
 
   useEffect(() => {
     loadSignedInUser();

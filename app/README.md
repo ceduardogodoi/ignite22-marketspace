@@ -40,8 +40,8 @@
 
 [X] SigIn > Logar usuário
 
-[ ] SignUp & SignIn > Mostrar loading enquanto processa informações
- 
+[X] SignUp & SignIn > Mostrar loading enquanto processa informações
+
 [?] Separar reducer/actions/action creators
 
 ---

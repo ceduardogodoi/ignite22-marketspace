@@ -5,10 +5,14 @@ import { useStore } from '../store';
 import { AuthRoutes } from './auth.routes';
 import { TabRoutes } from './tab.routes';
 
-export function Routes() {
-  const { session } = useStore();
+import { MSLoadingModal } from '../components/MSLoadingModal';
 
-  console.log('session::', JSON.stringify(session, null, 2));
+export function Routes() {
+  const { session, isSessionLoading = false } = useStore();
+
+  if (isSessionLoading) {
+    return <MSLoadingModal description="Carregando informações..." />
+  }
 
   return (
     <NavigationContainer>
