@@ -44,7 +44,11 @@
 
 [X] Separar reducer/actions/action creators
 
-[ ] Home > carregar informações do usuário
+[X] Home > carregar informações do usuário
+
+[X] SignIn > Toast de sucesso aparecendo dobrado as vezes
+
+[ ] Home > Criar novo anúncio
 
 - Imagem, nome, anúncios
 
