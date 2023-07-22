@@ -26,6 +26,7 @@ import { SignInFormData } from '../screens/SignIn';
 import { SignUpFormData } from '../screens/SignUp';
 
 import { AppError } from '../utils/AppError';
+import { TOAST_DURATION } from '../utils/toastConfigs';
 
 export type StoreData = {
   session?: Session | null;
@@ -70,6 +71,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         title: 'Usuário logado com sucesso',
         placement: 'top',
         backgroundColor: 'green.500',
+        duration: TOAST_DURATION,
       });
     } catch (error) {
       let title = 'Não foi possível logar. Tente novamente mais tarde.';
@@ -82,6 +84,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         title,
         placement: 'top',
         backgroundColor: 'custom.red-light',
+        duration: TOAST_DURATION,
       });
     }
   }
@@ -99,6 +102,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         title: 'Usuário criado com sucesso',
         placement: 'top',
         backgroundColor: 'green.500',
+        duration: TOAST_DURATION,
       });
     } catch (error) {
       let title = 'Não foi possível criar a conta. Tente novamente mais tarde.';
@@ -111,6 +115,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         title,
         placement: 'top',
         backgroundColor: 'custom.red-light',
+        duration: TOAST_DURATION,
       });
     }
   }

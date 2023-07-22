@@ -4,10 +4,20 @@ import { Plus } from 'phosphor-react-native';
 
 import { MSAvatar } from '../../../components/MSAvatar';
 
+import { useStore } from '../../../store';
+
 import { theme } from '../../../../config/theme';
+import { http } from '../../../libs/axios';
 
 export function Header() {
+  const { session } = useStore();
+
   const insets = useSafeAreaInsets();
+
+  if (!session) {
+    return null;
+  }
+  const { user } = session;
 
   const marginTop = insets.top + 36;
 
@@ -17,7 +27,7 @@ export function Header() {
         <Box mr="2.5">
           <MSAvatar
             size="12"
-            imageUrl="https://github.com/ceduardogodoi.png"
+            imageUrl={`${http.defaults.baseURL}/images/${user.avatar}`}
           />
         </Box>
 
@@ -34,7 +44,7 @@ export function Header() {
             lineHeight="md"
             color="custom.gray-1"
           >
-            Carlos!
+            {user.name}
           </Heading>
         </VStack>
       </HStack>

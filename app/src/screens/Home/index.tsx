@@ -1,11 +1,11 @@
-import { Box, FlatList, VStack } from 'native-base';
+import { useState } from 'react';
 
+import { Box, FlatList, VStack } from 'native-base';
 import { Header } from './components/Header';
 import { AdvertisementsCard } from './components/AdvertisementsCard';
 import { FindAdvertisement } from './components/FindAdvertisement';
 import { MSProductCard } from '../../components/MSProductCard';
 import { FilterModal } from './components/FilterModal';
-import { useState } from 'react';
 
 function HorizontalSeparatorComponent() {
   return <Box h="6" bgColor="transparent" />

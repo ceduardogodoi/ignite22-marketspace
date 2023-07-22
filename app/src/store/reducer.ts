@@ -2,7 +2,6 @@ import { StoreData } from './';
 
 import { Action, ActionTypes } from './actions';
 
-// Reducer
 export function reducer(state: StoreData, action: Action): StoreData {
   switch (action.type) {
     case ActionTypes.CREATE_SESSION: {
