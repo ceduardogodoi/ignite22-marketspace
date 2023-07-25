@@ -48,7 +48,9 @@
 
 [X] SignIn > Toast de sucesso aparecendo dobrado as vezes
 
-[ ] Home > Criar novo anúncio
+[X] Routes > Criar rotas de acordo com o design
+
+[ ] Home > Criar anúncio
 
 ---
 

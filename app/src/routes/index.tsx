@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useStore } from '../store';
 
 import { AuthRoutes } from './auth.routes';
-import { TabRoutes } from './tab.routes';
 
 import { MSLoadingModal } from '../components/MSLoadingModal';
+import { AppRoutes } from './app.routes';
 
 export function Routes() {
   const { session, isSessionLoading = false } = useStore();
@@ -19,7 +19,7 @@ export function Routes() {
       {!session?.user.id ? (
         <AuthRoutes />
       ) : (
-        <TabRoutes />
+        <AppRoutes />
       )}
     </NavigationContainer>
   );

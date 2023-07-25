@@ -13,20 +13,28 @@ import {
 } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ArrowLeft, Plus, X } from 'phosphor-react-native';
-
 import { MSInput } from '../../components/MSInput';
 import { MSSwitch } from '../../components/MSSwitch';
-
 import { theme } from '../../../config/theme';
-
 import { paymentMethods } from '../../utils/data';
+import { AppRootStackParamList } from '../../routes/app.routes';
+
+type CreateAdvertisementRoutesNavigationProp = NativeStackNavigationProp<AppRootStackParamList, 'CreateAdvertisement'>;
 
 export function CreateAdvertisement() {
   const insets = useSafeAreaInsets();
 
+  const navigation = useNavigation<CreateAdvertisementRoutesNavigationProp>();
+
   const marginTop = insets.top + 20;
   const paddingBottom = Platform.OS === 'ios' ? insets.bottom : undefined;
+
+  function handleGoHome() {
+    navigation.navigate('TabRoutes');
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -47,6 +55,7 @@ export function CreateAdvertisement() {
             _pressed={{
               bgColor: 'custom.gray-5',
             }}
+            onPress={handleGoHome}
           >
             <ArrowLeft size={24} color={theme.colors.custom['gray-1']} />
           </Pressable>

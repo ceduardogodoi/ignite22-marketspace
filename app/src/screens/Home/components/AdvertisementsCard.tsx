@@ -1,9 +1,19 @@
 import { Box, Button, HStack, Text, VStack } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { ArrowRight, Tag } from 'phosphor-react-native';
-
+import { TabRootStackParamList } from '../../../routes/tab.routes';
 import { theme } from '../../../../config/theme';
 
+type HomeTabNavigationProp = BottomTabNavigationProp<TabRootStackParamList, 'Home'>;
+
 export function AdvertisementsCard() {
+  const navigation = useNavigation<HomeTabNavigationProp>();
+
+  function handleGoToMyAdvertisements() {
+    navigation.navigate('MyAdvertisements');
+  }
+
   return (
     <VStack mt="8" mb="8">
       <Text
@@ -26,9 +36,22 @@ export function AdvertisementsCard() {
           </VStack>
         </HStack>
 
-        <Button variant="ghost" alignItems="center" _pressed={{ bgColor: 'custom.blue-lightest' }}>
+        <Button
+          variant="ghost"
+          alignItems="center"
+          _pressed={{ bgColor: 'custom.blue-lightest' }}
+          onPress={handleGoToMyAdvertisements}
+        >
           <HStack alignItems="center">
-            <Text mr="2" fontWeight="bold" fontSize="xs" lineHeight="2xs" color="custom.blue">Meus anúncios</Text>
+            <Text
+              mr="2"
+              fontWeight="bold"
+              fontSize="xs"
+              lineHeight="2xs"
+              color="custom.blue"
+            >
+              Meus anúncios
+            </Text>
 
             <ArrowRight size={16} color={theme.colors.custom.blue} />
           </HStack>

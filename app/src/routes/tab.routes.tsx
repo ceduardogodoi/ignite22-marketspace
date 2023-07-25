@@ -6,13 +6,13 @@ import { Home } from '../screens/Home';
 import { MyAdvertisements } from '../screens/MyAdvertisements';
 import { useStore } from '../store';
 
-type RootStackParamList = {
+export type TabRootStackParamList = {
   Home: undefined;
   MyAdvertisements: undefined;
   SignOut: undefined;
 };
 
-const Tab = createBottomTabNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<TabRootStackParamList>();
 
 function SignOutRouteComponent() {
   return null;

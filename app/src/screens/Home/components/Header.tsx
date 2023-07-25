@@ -1,16 +1,20 @@
 import { Box, Button, HStack, Heading, Text, VStack } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Plus } from 'phosphor-react-native';
-
+import { AppRootStackParamList } from '../../../routes/app.routes';
 import { MSAvatar } from '../../../components/MSAvatar';
-
 import { useStore } from '../../../store';
-
-import { theme } from '../../../../config/theme';
 import { http } from '../../../libs/axios';
+import { theme } from '../../../../config/theme';
+
+type HomeRoutesNavigationProp = NativeStackNavigationProp<AppRootStackParamList, 'TabRoutes'>;
 
 export function Header() {
   const { session } = useStore();
+
+  const navigation = useNavigation<HomeRoutesNavigationProp>();
 
   const insets = useSafeAreaInsets();
 
@@ -20,6 +24,10 @@ export function Header() {
   const { user } = session;
 
   const marginTop = insets.top + 36;
+
+  function handleGoToCreateAdvertisement() {
+    navigation.navigate('CreateAdvertisement');
+  }
 
   return (
     <HStack mt={marginTop} justifyContent="space-between">
@@ -57,6 +65,7 @@ export function Header() {
         _pressed={{
           bgColor: 'custom.gray-2',
         }}
+        onPress={handleGoToCreateAdvertisement}
       >
         <HStack>
           <Box mr="2">

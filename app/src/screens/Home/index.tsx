@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { Box, FlatList, VStack } from 'native-base';
 import { Header } from './components/Header';
 import { AdvertisementsCard } from './components/AdvertisementsCard';
