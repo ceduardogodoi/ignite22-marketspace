@@ -50,7 +50,9 @@
 
 [X] Routes > Criar rotas de acordo com o design
 
-[ ] Home > Criar anúncio
+[X] Home > Criar anúncio
+
+[ ] Criar Anúncio > Adicionar array de imagens
 
 ---
 
