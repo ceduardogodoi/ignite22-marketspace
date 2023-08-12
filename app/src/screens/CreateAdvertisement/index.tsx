@@ -1,10 +1,10 @@
 import { LogBox, Platform, StyleSheet } from 'react-native';
 import {
-  Box,
   Button,
   Checkbox,
   HStack,
   Heading,
+  Image,
   Pressable,
   Radio,
   Text,
@@ -16,7 +16,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ArrowLeft, Plus, X } from 'phosphor-react-native';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import * as ImagePicker from 'expo-image-picker';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { MSInput } from '../../components/MSInput';
@@ -32,11 +33,13 @@ LogBox.ignoreLogs([
 type CreateAdvertisementRoutesNavigationProp = NativeStackNavigationProp<AppRootStackParamList, 'CreateAdvertisement'>;
 
 const createAdvertisementSchema = z.object({
-  // images: z.array(
-  //   z.string(), { required_error: 'As imagens são obrigatórias' }
-  // )
-  //   .min(1, 'Mínimo de uma imagem')
-  //   .max(3, 'Máximo de três imagens'),
+  images: z.array(
+    z.object({
+      uri: z.string(),
+    }),
+  )
+    .min(1, 'Mínimo de uma imagem')
+    .max(3, 'Máximo de três imagens'),
   name: z.string({ required_error: 'Título é obrigatório' }),
   description: z.string({ required_error: 'Descrição é obrigatória' }),
   is_new: z.string({ required_error: 'Informe a condição do produto' }),
@@ -57,8 +60,26 @@ export function CreateAdvertisement() {
 
   const navigation = useNavigation<CreateAdvertisementRoutesNavigationProp>();
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormDataInput, undefined, FormDataOutput>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setValue,
+  } = useForm<FormDataInput, undefined, FormDataOutput>({
     resolver: zodResolver(createAdvertisementSchema),
+    defaultValues: {
+      images: [
+        {
+          uri: '',
+        },
+      ],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    name: 'images',
+    control,
   });
 
   const marginTop = insets.top + 20;
@@ -71,6 +92,27 @@ export function CreateAdvertisement() {
   function handleGoHome() {
     navigation.navigate('TabRoutes');
   }
+
+  async function handlePickImage(index: number) {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+
+    if (result.canceled) return;
+
+    const images = [...getValues('images')];
+    images[index].uri = result.assets[0].uri;
+
+    setValue('images', images);
+
+    if (index <= 2) {
+      append({
+        uri: '',
+      });
+    }
+  }
+
+  console.log(JSON.stringify(fields, null, 2));
 
   return (
     <KeyboardAwareScrollView
@@ -117,31 +159,47 @@ export function CreateAdvertisement() {
           </Text>
 
           <HStack>
-            <Box
-              mt="4"
-              w="24"
-              h="24"
-              bgColor="custom.gray-5"
-              borderRadius={6}
-              justifyContent="center"
-              alignItems="center"
-            >
+            {fields.map((field, index) => (
               <Pressable
-                w="5"
-                h="5"
-                bgColor="custom.gray-2"
-                rounded="full"
+                key={field.id}
+                mt="4"
+                mr="2"
+                w="24"
+                h="24"
+                bgColor="custom.gray-5"
+                borderRadius={6}
                 justifyContent="center"
                 alignItems="center"
-                position="absolute"
-                top="1"
-                right="1"
+                onPress={() => handlePickImage(index)}
               >
-                <X size={12} color={theme.colors.custom['gray-7']} />
-              </Pressable>
+                <Pressable
+                  w="5"
+                  h="5"
+                  bgColor="custom.gray-2"
+                  rounded="full"
+                  justifyContent="center"
+                  alignItems="center"
+                  position="absolute"
+                  top="1"
+                  right="1"
+                  onPress={() => remove(index)}
+                  zIndex={1}
+                >
+                  <X size={12} color={theme.colors.custom['gray-7']} />
+                </Pressable>
 
-              <Plus size={24} color={theme.colors.custom['gray-4']} />
-            </Box>
+                {field.uri ? (
+                  <Image
+                    source={{ uri: field.uri }}
+                    alt={`Image ${index + 1}`}
+                    w="full"
+                    h="full"
+                  />
+                ) : (
+                  <Plus size={24} color={theme.colors.custom['gray-4']} />
+                )}
+              </Pressable>
+            ))}
           </HStack>
         </VStack>
 
