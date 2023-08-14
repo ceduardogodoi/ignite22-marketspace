@@ -35,7 +35,7 @@ type CreateAdvertisementRoutesNavigationProp = NativeStackNavigationProp<AppRoot
 const createAdvertisementSchema = z.object({
   images: z.array(
     z.object({
-      uri: z.string(),
+      uri: z.string().nonempty('Mínimo de uma imagem'),
     }),
   )
     .min(1, 'Mínimo de uma imagem')
@@ -66,6 +66,8 @@ export function CreateAdvertisement() {
     formState: { errors },
     getValues,
     setValue,
+    setError,
+    clearErrors,
   } = useForm<FormDataInput, undefined, FormDataOutput>({
     resolver: zodResolver(createAdvertisementSchema),
     defaultValues: {
@@ -81,6 +83,7 @@ export function CreateAdvertisement() {
     name: 'images',
     control,
   });
+  console.log(JSON.stringify(errors.images, null, 2));
 
   const marginTop = insets.top + 20;
   const paddingBottom = Platform.OS === 'ios' ? insets.bottom : undefined;
@@ -104,15 +107,29 @@ export function CreateAdvertisement() {
     images[index].uri = result.assets[0].uri;
 
     setValue('images', images);
+    clearErrors('images');
 
-    if (index <= 2) {
+    if (index < 2) {
       append({
         uri: '',
       });
     }
   }
 
-  console.log(JSON.stringify(fields, null, 2));
+  function handleRemoveImage(index: number) {
+    const imagesQuantity = getValues('images').length;
+    remove(index);
+
+    if (imagesQuantity === 1) {
+      setError('images', {
+        type: 'min',
+      });
+
+      append({
+        uri: '',
+      })
+    }
+  }
 
   return (
     <KeyboardAwareScrollView
@@ -182,7 +199,7 @@ export function CreateAdvertisement() {
                   position="absolute"
                   top="1"
                   right="1"
-                  onPress={() => remove(index)}
+                  onPress={() => handleRemoveImage(index)}
                   zIndex={1}
                 >
                   <X size={12} color={theme.colors.custom['gray-7']} />
@@ -201,6 +218,12 @@ export function CreateAdvertisement() {
               </Pressable>
             ))}
           </HStack>
+
+          {errors.images?.[0]?.uri?.message && (
+            <VStack mt="1">
+              <Text color="custom.red-light">{errors.images[0].uri.message}</Text>
+            </VStack>
+          )}
         </VStack>
 
         <VStack mt="8">
