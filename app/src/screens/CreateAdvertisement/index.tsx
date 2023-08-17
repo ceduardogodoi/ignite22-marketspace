@@ -83,7 +83,6 @@ export function CreateAdvertisement() {
     name: 'images',
     control,
   });
-  console.log(JSON.stringify(errors.images, null, 2));
 
   const marginTop = insets.top + 20;
   const paddingBottom = Platform.OS === 'ios' ? insets.bottom : undefined;
@@ -189,29 +188,32 @@ export function CreateAdvertisement() {
                 alignItems="center"
                 onPress={() => handlePickImage(index)}
               >
-                <Pressable
-                  w="5"
-                  h="5"
-                  bgColor="custom.gray-2"
-                  rounded="full"
-                  justifyContent="center"
-                  alignItems="center"
-                  position="absolute"
-                  top="1"
-                  right="1"
-                  onPress={() => handleRemoveImage(index)}
-                  zIndex={1}
-                >
-                  <X size={12} color={theme.colors.custom['gray-7']} />
-                </Pressable>
-
                 {field.uri ? (
-                  <Image
-                    source={{ uri: field.uri }}
-                    alt={`Image ${index + 1}`}
-                    w="full"
-                    h="full"
-                  />
+                  <>
+                    <Pressable
+                      w="5"
+                      h="5"
+                      bgColor="custom.gray-2"
+                      rounded="full"
+                      justifyContent="center"
+                      alignItems="center"
+                      position="absolute"
+                      top="1"
+                      right="1"
+                      onPress={() => handleRemoveImage(index)}
+                      zIndex={1}
+                    >
+                      <X size={12} color={theme.colors.custom['gray-7']} />
+                    </Pressable>
+
+                    <Image
+                      source={{ uri: field.uri }}
+                      alt={`Image ${index + 1}`}
+                      w="full"
+                      h="full"
+                      borderRadius={6}
+                    />
+                  </>
                 ) : (
                   <Plus size={24} color={theme.colors.custom['gray-4']} />
                 )}
