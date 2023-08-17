@@ -76,6 +76,7 @@ export function CreateAdvertisement() {
           uri: '',
         },
       ],
+      accept_trade: false,
     },
   });
 
