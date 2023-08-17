@@ -35,11 +35,12 @@ type CreateAdvertisementRoutesNavigationProp = NativeStackNavigationProp<AppRoot
 const createAdvertisementSchema = z.object({
   images: z.array(
     z.object({
-      uri: z.string().nonempty('Mínimo de uma imagem'),
+      uri: z.string(),
     }),
   )
-    .min(1, 'Mínimo de uma imagem')
-    .max(3, 'Máximo de três imagens'),
+    .min(2, 'Mínimo de uma imagem')
+    .max(3, 'Máximo de três imagens')
+    .transform(images => images.filter(image => image.uri)),
   name: z.string({ required_error: 'Título é obrigatório' }),
   description: z.string({ required_error: 'Descrição é obrigatória' }),
   is_new: z.string({ required_error: 'Informe a condição do produto' }),
@@ -115,6 +116,8 @@ export function CreateAdvertisement() {
       });
     }
   }
+  // console.log(JSON.stringify(errors.images, null, 2));
+  // console.log(JSON.stringify(getValues('images'), null, 2));
 
   function handleRemoveImage(index: number) {
     const imagesQuantity = getValues('images').length;
@@ -222,9 +225,9 @@ export function CreateAdvertisement() {
             ))}
           </HStack>
 
-          {errors.images?.[0]?.uri?.message && (
+          {errors.images?.message && (
             <VStack mt="1">
-              <Text color="custom.red-light">{errors.images[0].uri.message}</Text>
+              <Text color="custom.red-light">{errors.images.message}</Text>
             </VStack>
           )}
         </VStack>
