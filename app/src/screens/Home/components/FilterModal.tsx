@@ -8,7 +8,7 @@ import { MSSwitch } from '../../../components/MSSwitch';
 
 import { theme } from '../../../../config/theme';
 
-import { paymentMethods } from '../../../utils/data';
+import { paymentMethods } from '../../../types/PaymentMethod';
 
 export function FilterModal({
   onClose: handleCloseModal,
@@ -85,10 +85,10 @@ export function FilterModal({
         <Checkbox.Group>
           <VStack space="2">
             {paymentMethods
-              .map(paymentType => (
+              .map(({ name, value }) => (
                 <Checkbox
-                  key={paymentType}
-                  value={paymentType}
+                  key={value}
+                  value={value}
                   borderWidth={1}
                   borderColor="custom.gray-4"
                   borderStyle="solid"
@@ -101,7 +101,7 @@ export function FilterModal({
                     fontSize="md"
                     color="custom.gray-2"
                   >
-                    {paymentType}
+                    {name}
                   </Text>
                 </Checkbox>
               ))

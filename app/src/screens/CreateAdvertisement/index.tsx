@@ -23,7 +23,7 @@ import { z } from 'zod';
 import { MSInput } from '../../components/MSInput';
 import { MSSwitch } from '../../components/MSSwitch';
 import { theme } from '../../../config/theme';
-import { paymentMethods } from '../../utils/data';
+import { paymentMethods } from '../../types/PaymentMethod';
 import { AppRootStackParamList } from '../../routes/app.routes';
 
 LogBox.ignoreLogs([
@@ -43,7 +43,7 @@ const createAdvertisementSchema = z.object({
     .transform(images => images.filter(image => image.uri)),
   name: z.string({ required_error: 'Título é obrigatório' }),
   description: z.string({ required_error: 'Descrição é obrigatória' }),
-  is_new: z.string({ required_error: 'Informe a condição do produto' }),
+  is_new: z.boolean({ required_error: 'Informe a condição do produto' }).optional(),
   price: z
     .string({ required_error: 'Preço é obrigatório' })
     .transform(Number),
@@ -72,12 +72,30 @@ export function CreateAdvertisement() {
   } = useForm<FormDataInput, undefined, FormDataOutput>({
     resolver: zodResolver(createAdvertisementSchema),
     defaultValues: {
+      // images: [
+      //   {
+      //     uri: '',
+      //   },
+      // ],
+      // accept_trade: false,
+
       images: [
         {
-          uri: '',
+          uri: 'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fapp-aeef5d23-b48f-48fe-b73e-0efee143cae2/ImagePicker/540433b6-377b-4420-b484-8a8ddc2f3d8c.jpeg'
         },
+        {
+          uri: 'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fapp-aeef5d23-b48f-48fe-b73e-0efee143cae2/ImagePicker/30382050-ff6c-4a01-a1c6-9d9e63b0af79.jpeg'
+        }
       ],
+      name: 'Bike',
+      description: 'Bike moderna',
+      is_new: true,
+      price: '1000',
       accept_trade: false,
+      payment_methods: [
+        'pix',
+        'cash',
+      ]
     },
   });
 
@@ -116,8 +134,6 @@ export function CreateAdvertisement() {
       });
     }
   }
-  // console.log(JSON.stringify(errors.images, null, 2));
-  // console.log(JSON.stringify(getValues('images'), null, 2));
 
   function handleRemoveImage(index: number) {
     const imagesQuantity = getValues('images').length;
@@ -297,45 +313,57 @@ export function CreateAdvertisement() {
           <Controller
             name="is_new"
             control={control}
-            render={({ field: { onChange } }) => (
-              <Radio.Group name="condition" onChange={val => onChange(val)}>
-                <HStack mt="4" space="4">
-                  <Radio
-                    borderWidth={1}
-                    borderColor="custom.gray-4"
-                    borderStyle="solid"
-                    colorScheme="blue"
-                    _checked={{
-                      borderColor: "custom.blue-light",
-                      borderStyle: "solid",
-                      colorScheme: "custom.blue-light"
-                    }}
-                    value="new"
-                  >
-                    Produto novo
-                  </Radio>
-                  <Radio
-                    borderWidth={1}
-                    borderColor="custom.gray-4"
-                    borderStyle="solid"
-                    colorScheme="blue"
-                    _checked={{
-                      borderColor: "custom.blue-light",
-                      borderStyle: "solid",
-                    }}
-                    value="used"
-                  >
-                    Produto usado
-                  </Radio>
-                </HStack>
+            render={({ field: { onChange, value: formValue } }) => {
+              let defaultValue: string | undefined = undefined;
 
-                {errors.is_new?.message && (
-                  <VStack mt="1">
-                    <Text color="custom.red-light">{errors.is_new.message}</Text>
-                  </VStack>
-                )}
-              </Radio.Group>
-            )}
+              if (typeof formValue === 'boolean') {
+                defaultValue = formValue ? 'new' : 'used';
+              }
+
+              return (
+                <Radio.Group
+                  name="condition"
+                  onChange={value => onChange(value === 'new')}
+                  defaultValue={defaultValue}
+                >
+                  <HStack mt="4" space="4">
+                    <Radio
+                      borderWidth={1}
+                      borderColor="custom.gray-4"
+                      borderStyle="solid"
+                      colorScheme="blue"
+                      _checked={{
+                        borderColor: "custom.blue-light",
+                        borderStyle: "solid",
+                        colorScheme: "custom.blue-light"
+                      }}
+                      value='new'
+                    >
+                      Produto novo
+                    </Radio>
+                    <Radio
+                      borderWidth={1}
+                      borderColor="custom.gray-4"
+                      borderStyle="solid"
+                      colorScheme="blue"
+                      _checked={{
+                        borderColor: "custom.blue-light",
+                        borderStyle: "solid",
+                      }}
+                      value="used"
+                    >
+                      Produto usado
+                    </Radio>
+                  </HStack>
+
+                  {errors.is_new?.message && (
+                    <VStack mt="1">
+                      <Text color="custom.red-light">{errors.is_new.message}</Text>
+                    </VStack>
+                  )}
+                </Radio.Group>
+              )
+            }}
           />
 
           <VStack mt="8">
@@ -405,32 +433,35 @@ export function CreateAdvertisement() {
             <Controller
               name="payment_methods"
               control={control}
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, value: formValue } }) => (
                 <Checkbox.Group
                   onChange={onChange}
+                  defaultValue={formValue}
                 >
                   <VStack mt="3" space="2">
                     {paymentMethods
-                      .map(paymentType => (
-                        <Checkbox
-                          key={paymentType}
-                          value={paymentType}
-                          borderWidth={1}
-                          borderColor="custom.gray-4"
-                          borderStyle="solid"
-                          _checked={{
-                            borderColor: 'custom.blue-light',
-                            bgColor: 'custom.blue-light',
-                          }}
-                        >
-                          <Text
-                            fontSize="md"
-                            color="custom.gray-2"
+                      .map(({ name, value }) => {
+                        return (
+                          <Checkbox
+                            key={value}
+                            value={value}
+                            borderWidth={1}
+                            borderColor="custom.gray-4"
+                            borderStyle="solid"
+                            _checked={{
+                              borderColor: 'custom.blue-light',
+                              bgColor: 'custom.blue-light',
+                            }}
                           >
-                            {paymentType}
-                          </Text>
-                        </Checkbox>
-                      ))
+                            <Text
+                              fontSize="md"
+                              color="custom.gray-2"
+                            >
+                              {name}
+                            </Text>
+                          </Checkbox>
+                        )
+                      })
                     }
                   </VStack>
                   {errors.payment_methods?.message && (
@@ -458,6 +489,7 @@ export function CreateAdvertisement() {
           h="10"
           bgColor="custom.gray-5"
           borderRadius={6}
+          onPress={handleGoHome}
         >
           <Text
             fontWeight="bold"

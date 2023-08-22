@@ -8,7 +8,11 @@ export const http = axios.create({
 });
 
 http.interceptors.response.use(
-  response => response,
+  response => {
+    response.config.headers.Authorization = `Bearer ${response.data.token}`;
+
+    return response;
+  },
   error => {
     if (error.response?.data) {
       return Promise.reject(new AppError(error.response.data.message));

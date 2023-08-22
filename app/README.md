@@ -52,7 +52,9 @@
 
 [X] Home > Criar anúncio
 
-[ ] Criar Anúncio > Adicionar array de imagens
+[X] Criar Anúncio > Adicionar array de imagens
+
+[] Criar Anúncio > Adequar formato dos dados para o POST /products
 
 ---
 

@@ -46,6 +46,10 @@ export function SignIn() {
     formState: { errors }
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: 'a@a.com',
+      password: '1',
+    },
   });
 
   const insets = useSafeAreaInsets();

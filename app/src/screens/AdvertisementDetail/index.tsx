@@ -32,7 +32,7 @@ import { MSTag } from '../../components/MSTag';
 import { CarouselItem } from './components/CarouselItem';
 import { PaginationItem } from './components/PaginationItem';
 
-import { productImages } from '../../utils/data';
+import { productImages } from '../../utils/mocks';
 
 export function AdvertisementDetail() {
   const [currentImage, setCurrentImage] = useState(0);
