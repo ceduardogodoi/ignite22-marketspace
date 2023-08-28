@@ -54,7 +54,11 @@
 
 [X] Criar Anúncio > Adicionar array de imagens
 
-[] Criar Anúncio > Adequar formato dos dados para o POST /products
+[X] SignIn > Adicionar token ao header
+
+[X] Criar Anúncio > Adequar formato dos dados para o POST /products
+
+[ ] Criar Anúncio > Fazer requisição para salvar as imagens
 
 ---
 

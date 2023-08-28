@@ -10,6 +10,7 @@ import { useToast } from 'native-base';
 
 import { userService } from '../services/UserService';
 import { Session, sessionService } from '../services/SessionService';
+import { productService } from '../services/ProductService';
 
 import { reducer } from './reducer';
 import {
@@ -24,7 +25,9 @@ import * as storage from '../storage'
 
 import { SignInFormData } from '../screens/SignIn';
 import { SignUpFormData } from '../screens/SignUp';
+import { CreateAdvertisementFormData } from '../screens/CreateAdvertisement';
 
+import { http } from '../libs/axios';
 import { AppError } from '../utils/AppError';
 import { TOAST_DURATION } from '../utils/toastConfigs';
 
@@ -37,6 +40,7 @@ type StoreFunctions = {
   signIn(data: SignInFormData): Promise<void>;
   signUp(data: SignUpFormData): Promise<void>;
   signOut(): Promise<void>;
+  createAdvertisement(data: CreateAdvertisementFormData): Promise<void>;
 }
 
 type Store = StoreData & StoreFunctions;
@@ -66,6 +70,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
       });
 
       await storage.saveUser(session.user);
+
+      http.defaults.headers.common.Authorization = `Bearer ${session.token}`;
 
       toast.show({
         title: 'Usuário logado com sucesso',
@@ -145,6 +151,10 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     await storage.signOut();
   }
 
+  async function createAdvertisement(data: CreateAdvertisementFormData) {
+    await productService.create(data);
+  }
+
   const store = useMemo<Store>(() => {
     return {
       session: state.session,
@@ -152,6 +162,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
       signIn,
       signUp,
       signOut,
+      createAdvertisement,
     };
   }, [state.session, state.isSessionLoading]);
 

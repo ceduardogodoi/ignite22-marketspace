@@ -9,8 +9,6 @@ export const http = axios.create({
 
 http.interceptors.response.use(
   response => {
-    response.config.headers.Authorization = `Bearer ${response.data.token}`;
-
     return response;
   },
   error => {
@@ -20,4 +18,4 @@ http.interceptors.response.use(
 
     return Promise.reject(error);
   }
-)
+);

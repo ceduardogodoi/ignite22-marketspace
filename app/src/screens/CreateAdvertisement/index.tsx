@@ -23,6 +23,7 @@ import { z } from 'zod';
 import { MSInput } from '../../components/MSInput';
 import { MSSwitch } from '../../components/MSSwitch';
 import { theme } from '../../../config/theme';
+import { useStore } from '../../store';
 import { paymentMethods } from '../../types/PaymentMethod';
 import { AppRootStackParamList } from '../../routes/app.routes';
 
@@ -43,7 +44,7 @@ const createAdvertisementSchema = z.object({
     .transform(images => images.filter(image => image.uri)),
   name: z.string({ required_error: 'Título é obrigatório' }),
   description: z.string({ required_error: 'Descrição é obrigatória' }),
-  is_new: z.boolean({ required_error: 'Informe a condição do produto' }).optional(),
+  is_new: z.boolean({ required_error: 'Informe a condição do produto' }),
   price: z
     .string({ required_error: 'Preço é obrigatório' })
     .transform(Number),
@@ -53,13 +54,17 @@ const createAdvertisementSchema = z.object({
   ).min(1, 'Escolha pelo menos uma forma de pagamento'),
 })
 
-type FormDataInput = z.input<typeof createAdvertisementSchema>;
-type FormDataOutput = z.output<typeof createAdvertisementSchema>;
+type CreateAdvertisementInput = z.input<typeof createAdvertisementSchema>;
+type CreateAdvertisementOutput = z.output<typeof createAdvertisementSchema>;
+
+export type CreateAdvertisementFormData = Required<Omit<CreateAdvertisementOutput, 'images'>>;
 
 export function CreateAdvertisement() {
   const insets = useSafeAreaInsets();
 
   const navigation = useNavigation<CreateAdvertisementRoutesNavigationProp>();
+
+  const context = useStore();
 
   const {
     control,
@@ -69,7 +74,7 @@ export function CreateAdvertisement() {
     setValue,
     setError,
     clearErrors,
-  } = useForm<FormDataInput, undefined, FormDataOutput>({
+  } = useForm<CreateAdvertisementInput, undefined, CreateAdvertisementOutput>({
     resolver: zodResolver(createAdvertisementSchema),
     defaultValues: {
       // images: [
@@ -107,8 +112,17 @@ export function CreateAdvertisement() {
   const marginTop = insets.top + 20;
   const paddingBottom = Platform.OS === 'ios' ? insets.bottom : undefined;
 
-  function handleCreateAdvertisement(data: FormDataOutput) {
-    console.log(JSON.stringify(data, null, 2));
+  async function handleCreateAdvertisement(data: CreateAdvertisementOutput) {
+    const payload: CreateAdvertisementFormData = {
+      name: data.name,
+      description: data.description,
+      is_new: data.is_new,
+      price: data.price,
+      accept_trade: data.accept_trade,
+      payment_methods: data.payment_methods,
+    }
+
+    await context.createAdvertisement(payload);
   }
 
   function handleGoHome() {
