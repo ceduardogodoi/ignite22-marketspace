@@ -58,7 +58,9 @@
 
 [X] Criar Anúncio > Adequar formato dos dados para o POST /products
 
-[ ] Criar Anúncio > Fazer requisição para salvar as imagens
+[X] Criar Anúncio > Fazer requisição para salvar as imagens
+
+[ ] Criar Anúncio > Mostrar toast com mensagem de sucesso e direcionar o usuário para a home
 
 ---
 

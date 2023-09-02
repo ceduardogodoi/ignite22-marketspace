@@ -1,34 +1,26 @@
 import { AxiosResponse } from 'axios';
 
 import { http } from '../libs/axios';
-import { CreateAdvertisementFormData } from '../screens/CreateAdvertisement';
-
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  is_new: boolean;
-  price: number;
-  accept_trade: boolean;
-  user_id: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-}
+import { Product, ProductDTO, ProductImages, ProductImagesDTO } from '../dtos/Product';
 
 class ProductService {
-  async create({
-    name,
-    description,
-    is_new,
-    price,
-    accept_trade,
-    payment_methods,
-  }: CreateAdvertisementFormData): Promise<Product> {
+  async create(
+    data: ProductDTO,
+    images: ProductImagesDTO
+  ): Promise<void> {
+    const {
+      name,
+      description,
+      is_new,
+      price,
+      accept_trade,
+      payment_methods,
+    } = data;
+
     const response = await http.post<
       Product,
-      AxiosResponse<Product, CreateAdvertisementFormData>,
-      CreateAdvertisementFormData
+      AxiosResponse<Product, ProductDTO>,
+      ProductDTO
     >('/products', {
       name,
       description,
@@ -38,7 +30,28 @@ class ProductService {
       payment_methods,
     });
 
-    return response.data;
+    const product = response.data;
+
+    const formData = new FormData();
+    formData.append('product_id', product.id);
+    images.forEach(image => {
+      const fileExtension = image.uri.split('.').pop() ?? '*';
+
+      formData.append('images', {
+        uri: image.uri,
+        name: new Date().getTime().toString(),
+        type: `image/${fileExtension}`,
+      });
+    });
+
+    await http.post<ProductImages, AxiosResponse<ProductImages, ProductImagesDTO>, FormData>(
+      '/products/images',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
   }
 }
 

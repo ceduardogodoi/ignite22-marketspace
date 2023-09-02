@@ -59,6 +59,8 @@ type CreateAdvertisementOutput = z.output<typeof createAdvertisementSchema>;
 
 export type CreateAdvertisementFormData = Required<Omit<CreateAdvertisementOutput, 'images'>>;
 
+export type CreateAdverstimentImages = Pick<CreateAdvertisementOutput, 'images'>['images'];
+
 export function CreateAdvertisement() {
   const insets = useSafeAreaInsets();
 
@@ -77,30 +79,25 @@ export function CreateAdvertisement() {
   } = useForm<CreateAdvertisementInput, undefined, CreateAdvertisementOutput>({
     resolver: zodResolver(createAdvertisementSchema),
     defaultValues: {
-      // images: [
-      //   {
-      //     uri: '',
-      //   },
-      // ],
-      // accept_trade: false,
-
       images: [
         {
-          uri: 'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fapp-aeef5d23-b48f-48fe-b73e-0efee143cae2/ImagePicker/540433b6-377b-4420-b484-8a8ddc2f3d8c.jpeg'
+          uri: '',
         },
-        {
-          uri: 'file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fapp-aeef5d23-b48f-48fe-b73e-0efee143cae2/ImagePicker/30382050-ff6c-4a01-a1c6-9d9e63b0af79.jpeg'
-        }
       ],
-      name: 'Bike',
-      description: 'Bike moderna',
-      is_new: true,
-      price: '1000',
-      accept_trade: false,
-      payment_methods: [
-        'pix',
-        'cash',
-      ]
+      // images: [
+      //   {
+      //     uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fapp-aeef5d23-b48f-48fe-b73e-0efee143cae2/ImagePicker/40d84090-c5ca-41f4-bf27-73089625845f.jpeg"
+      //   },
+      // ],
+      // name: 'Bike',
+      // description: 'Bike moderna',
+      // is_new: true,
+      // price: '1000',
+      // accept_trade: false,
+      // payment_methods: [
+      //   'pix',
+      //   'cash',
+      // ]
     },
   });
 
@@ -120,9 +117,9 @@ export function CreateAdvertisement() {
       price: data.price,
       accept_trade: data.accept_trade,
       payment_methods: data.payment_methods,
-    }
+    };
 
-    await context.createAdvertisement(payload);
+    await context.createAdvertisement(payload, data.images);
   }
 
   function handleGoHome() {

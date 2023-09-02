@@ -9,6 +9,7 @@ import { AppRoutes } from './app.routes';
 
 export function Routes() {
   const { session, isSessionLoading = false } = useStore();
+  console.log('session:', JSON.stringify(session, null, 2));
 
   if (isSessionLoading) {
     return <MSLoadingModal description="Carregando informações..." />

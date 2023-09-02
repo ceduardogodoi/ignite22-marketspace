@@ -25,7 +25,7 @@ import * as storage from '../storage'
 
 import { SignInFormData } from '../screens/SignIn';
 import { SignUpFormData } from '../screens/SignUp';
-import { CreateAdvertisementFormData } from '../screens/CreateAdvertisement';
+import { CreateAdverstimentImages, CreateAdvertisementFormData } from '../screens/CreateAdvertisement';
 
 import { http } from '../libs/axios';
 import { AppError } from '../utils/AppError';
@@ -40,7 +40,7 @@ type StoreFunctions = {
   signIn(data: SignInFormData): Promise<void>;
   signUp(data: SignUpFormData): Promise<void>;
   signOut(): Promise<void>;
-  createAdvertisement(data: CreateAdvertisementFormData): Promise<void>;
+  createAdvertisement(data: CreateAdvertisementFormData, images: CreateAdverstimentImages): Promise<void>;
 }
 
 type Store = StoreData & StoreFunctions;
@@ -151,8 +151,11 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     await storage.signOut();
   }
 
-  async function createAdvertisement(data: CreateAdvertisementFormData) {
-    await productService.create(data);
+  async function createAdvertisement(
+    data: CreateAdvertisementFormData,
+    images: CreateAdverstimentImages
+  ) {
+    await productService.create(data, images);
   }
 
   const store = useMemo<Store>(() => {
