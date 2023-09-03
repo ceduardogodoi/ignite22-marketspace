@@ -15,10 +15,10 @@ import { productService } from '../services/ProductService';
 import { reducer } from './reducer';
 import {
   createSessionAction,
-  endSessionLoading,
+  endSessionLoadingAction,
   loadSessionAction,
   signOutAction,
-  startSessionLoading,
+  startSessionLoadingAction,
 } from './actions';
 
 import * as storage from '../storage'
@@ -127,7 +127,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   }
 
   async function loadSignedInUser() {
-    dispatch(startSessionLoading());
+    dispatch(startSessionLoadingAction());
 
     const authTokens = await storage.getAuthTokens();
     const user = await storage.getUser();
@@ -142,7 +142,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
       }));
     }
 
-    dispatch(endSessionLoading());
+    dispatch(endSessionLoadingAction());
   }
 
   async function signOut() {
@@ -156,6 +156,13 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     images: CreateAdverstimentImages
   ) {
     await productService.create(data, images);
+
+    toast.show({
+      title: 'Produto adicionado com sucesso',
+      placement: 'top',
+      backgroundColor: 'green.500',
+      duration: TOAST_DURATION,
+    });
   }
 
   const store = useMemo<Store>(() => {

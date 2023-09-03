@@ -89,15 +89,15 @@ export function CreateAdvertisement() {
       //     uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fapp-aeef5d23-b48f-48fe-b73e-0efee143cae2/ImagePicker/40d84090-c5ca-41f4-bf27-73089625845f.jpeg"
       //   },
       // ],
-      // name: 'Bike',
-      // description: 'Bike moderna',
-      // is_new: true,
-      // price: '1000',
-      // accept_trade: false,
-      // payment_methods: [
-      //   'pix',
-      //   'cash',
-      // ]
+      name: 'Bike',
+      description: 'Bike moderna',
+      is_new: true,
+      price: '1000',
+      accept_trade: false,
+      payment_methods: [
+        'pix',
+        'cash',
+      ]
     },
   });
 
@@ -120,6 +120,8 @@ export function CreateAdvertisement() {
     };
 
     await context.createAdvertisement(payload, data.images);
+
+    navigation.navigate('TabRoutes');
   }
 
   function handleGoHome() {

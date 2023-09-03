@@ -7,6 +7,7 @@ export enum ActionTypes {
   LOAD_SESSION = 'session/load',
   START_SESSION_LOADING = 'session/startSessionLoading',
   END_SESSION_LOADING = 'session/endSessionLoading',
+  CREATE_PRODUCT = 'product/create',
 }
 
 export type Action =
@@ -26,6 +27,9 @@ export type Action =
   }
   | {
     type: ActionTypes.END_SESSION_LOADING,
+  }
+  | {
+    type: ActionTypes.CREATE_PRODUCT,
   }
 
 // Action Creators
@@ -49,13 +53,13 @@ export function signOutAction(): Action {
   };
 }
 
-export function startSessionLoading(): Action {
+export function startSessionLoadingAction(): Action {
   return {
     type: ActionTypes.START_SESSION_LOADING,
   };
 }
 
-export function endSessionLoading(): Action {
+export function endSessionLoadingAction(): Action {
   return {
     type: ActionTypes.END_SESSION_LOADING,
   };
