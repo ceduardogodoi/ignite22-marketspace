@@ -1,22 +1,22 @@
 export const paymentMethods = [
   {
     name: 'Boleto',
-    value: 'boleto'
+    key: 'boleto'
   },
   {
     name: 'Pix',
-    value: 'pix',
+    key: 'pix',
   },
   {
     name: 'Dinheiro',
-    value: 'cash',
+    key: 'cash',
   },
   {
     name: 'Deposit',
-    value: 'deposit',
+    key: 'deposit',
   },
   {
     name: 'Card',
-    value: 'card',
+    key: 'card',
   },
 ] as const;

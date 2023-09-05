@@ -48,7 +48,7 @@ type Store = StoreData & StoreFunctions;
 const initialState: StoreData = {
   isSessionLoading: false,
 };
-const AppStoreContext = createContext({} as Store);
+export const AppStoreContext = createContext({} as Store);
 
 export function AppContextProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(reducer, initialState);

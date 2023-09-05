@@ -453,11 +453,11 @@ export function CreateAdvertisement() {
                 >
                   <VStack mt="3" space="2">
                     {paymentMethods
-                      .map(({ name, value }) => {
+                      .map(({ name, key }) => {
                         return (
                           <Checkbox
-                            key={value}
-                            value={value}
+                            key={key}
+                            value={key}
                             borderWidth={1}
                             borderColor="custom.gray-4"
                             borderStyle="solid"

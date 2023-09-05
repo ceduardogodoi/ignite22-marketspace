@@ -1,3 +1,5 @@
+import { paymentMethods } from '../types/PaymentMethod';
+
 export interface ProductDTO {
   name: string;
   description: string;
@@ -31,3 +33,8 @@ interface ProductImage {
 }
 
 export type ProductImages = ProductImage[];
+
+export interface Advertisement extends Product {
+  product_images: Array<Pick<ProductImage, 'id' | 'path'>>;
+  payment_methods: Array<typeof paymentMethods[number]>;
+}

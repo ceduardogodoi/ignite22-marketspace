@@ -85,10 +85,10 @@ export function FilterModal({
         <Checkbox.Group>
           <VStack space="2">
             {paymentMethods
-              .map(({ name, value }) => (
+              .map(({ name, key }) => (
                 <Checkbox
-                  key={value}
-                  value={value}
+                  key={key}
+                  value={key}
                   borderWidth={1}
                   borderColor="custom.gray-4"
                   borderStyle="solid"

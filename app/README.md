@@ -62,7 +62,9 @@
 
 [X] Criar Anúncio > Mostrar toast com mensagem de sucesso e direcionar o usuário para a home
 
-[ ] Meus Anúncios > Carregar anúncios que o usuário logado possui
+[X] Meus Anúncios > Carregar anúncios que o usuário logado possui
+
+[ ] Login > Deslogar usuário com token expirado
 
 ---
 
