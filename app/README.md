@@ -64,6 +64,8 @@
 
 [X] Meus Anúncios > Carregar anúncios que o usuário logado possui
 
+[X] Home > Ao logar está dando erro "JWT token não informado"
+
 [ ] Login > Deslogar usuário com token expirado
 
 ---

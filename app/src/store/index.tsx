@@ -135,6 +135,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     if (authTokens && user) {
       const { token, refresh_token } = authTokens;
 
+      http.defaults.headers.common.Authorization = `Bearer ${authTokens.token}`;
+
       dispatch(loadSessionAction({
         token,
         user,

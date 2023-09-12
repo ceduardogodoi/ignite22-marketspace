@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { userProductsService } from '../services/UserProductsService';
 import { Advertisement } from '../dtos/Product';
 
-export function useMyAdvertisements() {
+export function useUserAdvertisements() {
   const [activeAmount, setActiveAmount] = useState(0);
   const [, setAdvertisements] = useState<Advertisement[]>([]);
 

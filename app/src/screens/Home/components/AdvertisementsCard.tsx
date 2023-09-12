@@ -4,14 +4,14 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { ArrowRight, Tag } from 'phosphor-react-native';
 import { TabRootStackParamList } from '../../../routes/tab.routes';
 import { theme } from '../../../../config/theme';
-import { useMyAdvertisements } from '../../../hooks/useMyAdverstisements';
+import { useUserAdvertisements } from '../../../hooks/useUserAdvertisements';
 
 type HomeTabNavigationProp = BottomTabNavigationProp<TabRootStackParamList, 'Home'>;
 
 export function AdvertisementsCard() {
   const navigation = useNavigation<HomeTabNavigationProp>();
 
-  const { activeAmount } = useMyAdvertisements();
+  const { activeAmount } = useUserAdvertisements();
 
   function handleGoToMyAdvertisements() {
     navigation.navigate('MyAdvertisements');
