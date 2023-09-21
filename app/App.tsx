@@ -5,7 +5,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/karla';
 
 import { Routes } from './src/routes';
-import { AppContextProvider } from './src/store';
 
 import { theme } from './config/theme';
 
@@ -23,9 +22,7 @@ export default function App() {
         <SafeAreaProvider>
           <StatusBar style="auto" />
 
-          <AppContextProvider>
-            <Routes />
-          </AppContextProvider>
+          <Routes />
         </SafeAreaProvider>
       </NativeBaseProvider>
     </GestureHandlerRootView>
