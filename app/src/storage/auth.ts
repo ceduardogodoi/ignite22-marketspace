@@ -23,6 +23,6 @@ export async function removeAuthTokens(): Promise<void> {
   await AsyncStorage.removeItem(STORAGE_AUTH_TOKEN);
 }
 
-export async function signOut() {
+export async function signOut(): Promise<void> {
   await AsyncStorage.clear();
 }

@@ -17,8 +17,6 @@ export function Routes() {
 
   return (
     <NavigationContainer>
-      {/* <AuthRoutes /> */}
-
       {!session?.user.id ? (
         <AuthRoutes />
       ) : (
