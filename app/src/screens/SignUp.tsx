@@ -17,8 +17,6 @@ import { AuthRootStackParamList } from '../routes/auth.routes';
 
 import { theme } from '../../config/theme';
 
-import { useStore } from '../store';
-
 import logo from '../assets/logo.png';
 
 const TOP_SPACING = 36;
@@ -56,8 +54,6 @@ export type SignUpFormData = z.infer<typeof signUpFormSchema>;
 export function SignUp() {
   const navigation = useNavigation<AuthRoutesNavigationProp>();
 
-  const context = useStore();
-
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
 
@@ -84,7 +80,6 @@ export function SignUp() {
   }
 
   async function handleCreate(data: SignUpFormData) {
-    await context.signUp(data);
   }
 
   function handleGoToLogin() {

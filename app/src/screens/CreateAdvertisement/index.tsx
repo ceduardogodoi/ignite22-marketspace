@@ -23,7 +23,6 @@ import { z } from 'zod';
 import { MSInput } from '../../components/MSInput';
 import { MSSwitch } from '../../components/MSSwitch';
 import { theme } from '../../../config/theme';
-import { useStore } from '../../store';
 import { paymentMethods } from '../../types/PaymentMethod';
 import { AppRootStackParamList } from '../../routes/app.routes';
 
@@ -65,8 +64,6 @@ export function CreateAdvertisement() {
   const insets = useSafeAreaInsets();
 
   const navigation = useNavigation<CreateAdvertisementRoutesNavigationProp>();
-
-  const context = useStore();
 
   const {
     control,
@@ -118,8 +115,6 @@ export function CreateAdvertisement() {
       accept_trade: data.accept_trade,
       payment_methods: data.payment_methods,
     };
-
-    await context.createAdvertisement(payload, data.images);
 
     navigation.navigate('TabRoutes');
   }

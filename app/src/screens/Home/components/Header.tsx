@@ -5,23 +5,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Plus } from 'phosphor-react-native';
 import { AppRootStackParamList } from '../../../routes/app.routes';
 import { MSAvatar } from '../../../components/MSAvatar';
-import { useStore } from '../../../store';
 import { http } from '../../../libs/axios';
 import { theme } from '../../../../config/theme';
 
 type HomeRoutesNavigationProp = NativeStackNavigationProp<AppRootStackParamList, 'TabRoutes'>;
 
 export function Header() {
-  const { session } = useStore();
-
   const navigation = useNavigation<HomeRoutesNavigationProp>();
 
   const insets = useSafeAreaInsets();
-
-  if (!session) {
-    return null;
-  }
-  const { user } = session;
 
   const marginTop = insets.top + 36;
 
@@ -33,10 +25,10 @@ export function Header() {
     <HStack mt={marginTop} justifyContent="space-between">
       <HStack>
         <Box mr="2.5">
-          <MSAvatar
+          {/* <MSAvatar
             size="12"
             imageUrl={`${http.defaults.baseURL}/images/${user.avatar}`}
-          />
+          /> */}
         </Box>
 
         <VStack>
@@ -52,7 +44,8 @@ export function Header() {
             lineHeight="md"
             color="custom.gray-1"
           >
-            {user.name}
+            {/* {user.name} */}
+            Username
           </Heading>
         </VStack>
       </HStack>

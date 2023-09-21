@@ -4,7 +4,6 @@ import { House, IconWeight, SignOut, Tag } from 'phosphor-react-native';
 
 import { Home } from '../screens/Home';
 import { MyAdvertisements } from '../screens/MyAdvertisements';
-import { useStore } from '../store';
 
 export type TabRootStackParamList = {
   Home: undefined;
@@ -19,8 +18,6 @@ function SignOutRouteComponent() {
 }
 
 export function TabRoutes() {
-  const { signOut } = useStore();
-
   const { colors } = useTheme();
 
   return (
@@ -66,7 +63,7 @@ export function TabRoutes() {
         component={SignOutRouteComponent}
         listeners={{
           tabPress() {
-            signOut();
+            console.log('signOut function');
           },
         }}
       />

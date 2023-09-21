@@ -12,8 +12,6 @@ import { MSInput } from '../components/MSInput';
 
 import { AuthRootStackParamList } from '../routes/auth.routes'
 
-import { useStore } from '../store';
-
 import logo from '../assets/logo.png';
 
 const TOP_SPACING = 65;
@@ -38,8 +36,6 @@ export type SignInFormData = {
 export function SignIn() {
   const navigation = useNavigation<AuthRoutesNavigationProp>();
 
-  const context = useStore();
-
   const {
     control,
     handleSubmit,
@@ -56,7 +52,6 @@ export function SignIn() {
   const paddingTop = insets.top + TOP_SPACING;
 
   async function handleSignIn(data: SignInFormData) {
-    await context.signIn(data);
   }
 
   function handleCreateAccount() {
