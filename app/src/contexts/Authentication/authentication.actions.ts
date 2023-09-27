@@ -19,7 +19,7 @@ export function createSession(payload: Session): Action {
   }
 }
 
-export function signOut(): Action {
+export function logout(): Action {
   return {
     type: ActionTypes.LOGOUT_SESSION,
   }

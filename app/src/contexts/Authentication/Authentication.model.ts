@@ -20,4 +20,5 @@ export interface AuthenticationModel {
   session?: Session;
   
   signIn(payload: SignInDTO): Promise<void>;
+  signOut(): void;
 }

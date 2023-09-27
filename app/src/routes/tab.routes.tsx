@@ -5,6 +5,8 @@ import { House, IconWeight, SignOut, Tag } from 'phosphor-react-native';
 import { Home } from '../screens/Home';
 import { MyAdvertisements } from '../screens/MyAdvertisements';
 
+import { useAuthentication } from '../hooks/useAuthentication';
+
 export type TabRootStackParamList = {
   Home: undefined;
   MyAdvertisements: undefined;
@@ -19,6 +21,8 @@ function SignOutRouteComponent() {
 
 export function TabRoutes() {
   const { colors } = useTheme();
+
+  const authentication = useAuthentication();
 
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
@@ -62,9 +66,12 @@ export function TabRoutes() {
         name="SignOut"
         component={SignOutRouteComponent}
         listeners={{
-          tabPress() {
-            console.log('signOut function');
-          },
+          tabPress: authentication.signOut
+
+          // the above can also be written as:
+          // tabPress() {
+          //   authentication.signOut();
+          // },
         }}
       />
     </Tab.Navigator>

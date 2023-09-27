@@ -5,7 +5,7 @@ import { sessionService } from '../../services/SessionService';
 import { SignInDTO } from '../../dtos/SignIn';
 import { AuthenticationModel } from './Authentication.model';
 
-import { createSession } from './authentication.actions';
+import { createSession, logout } from './authentication.actions';
 import { initialState, reducer } from './authentication.reducer';
 
 export const AuthenticationContext = createContext({} as AuthenticationModel);
@@ -19,11 +19,16 @@ export function AuthenticationContextProvider({ children }: PropsWithChildren) {
     dispatch(createSession(session));
   }, []);
 
+  const signOut = useCallback(() => {
+    dispatch(logout());
+  }, []);
+
   const context = useMemo(() => {
     return {
       session: state.session,
       signIn,
-    };
+      signOut,
+    } satisfies AuthenticationModel;
   }, [signIn, state]);
 
   return (
