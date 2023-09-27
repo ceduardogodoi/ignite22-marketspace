@@ -4,14 +4,11 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { ArrowRight, Tag } from 'phosphor-react-native';
 import { TabRootStackParamList } from '../../../routes/tab.routes';
 import { theme } from '../../../../config/theme';
-import { useUserAdvertisements } from '../../../hooks/useUserAdvertisements';
 
 type HomeTabNavigationProp = BottomTabNavigationProp<TabRootStackParamList, 'Home'>;
 
 export function AdvertisementsCard() {
   const navigation = useNavigation<HomeTabNavigationProp>();
-
-  const { activeAmount } = useUserAdvertisements();
 
   function handleGoToMyAdvertisements() {
     navigation.navigate('MyAdvertisements');
@@ -34,7 +31,7 @@ export function AdvertisementsCard() {
           </Box>
 
           <VStack>
-            <Text fontWeight="bold" fontSize="xl" lineHeight="lg" color="custom.gray-2">{activeAmount}</Text>
+            <Text fontWeight="bold" fontSize="xl" lineHeight="lg" color="custom.gray-2">0</Text>
             <Text fontSize="xs" lineHeight="2xs" color="custom.gray-2">anúncios ativos</Text>
           </VStack>
         </HStack>

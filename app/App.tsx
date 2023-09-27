@@ -7,6 +7,7 @@ import { Karla_400Regular, Karla_700Bold, useFonts } from '@expo-google-fonts/ka
 import { Routes } from './src/routes';
 
 import { theme } from './config/theme';
+import { AuthenticationContextProvider } from './src/contexts/Authentication';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +23,9 @@ export default function App() {
         <SafeAreaProvider>
           <StatusBar style="auto" />
 
-          <Routes />
+          <AuthenticationContextProvider>
+            <Routes />
+          </AuthenticationContextProvider>
         </SafeAreaProvider>
       </NativeBaseProvider>
     </GestureHandlerRootView>

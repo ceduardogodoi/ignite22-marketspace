@@ -12,7 +12,10 @@ import { MSInput } from '../components/MSInput';
 
 import { AuthRootStackParamList } from '../routes/auth.routes'
 
+import { SignInDTO } from '../dtos/SignIn';
+
 import logo from '../assets/logo.png';
+import { useAuthentication } from '../hooks/useAuthentication';
 
 const TOP_SPACING = 65;
 
@@ -28,19 +31,16 @@ const signInSchema = z.object({
     .nonempty({ message: 'Senha não pode ser vazia' })
 });
 
-export type SignInFormData = {
-  email: string;
-  password: string;
-}
-
 export function SignIn() {
   const navigation = useNavigation<AuthRoutesNavigationProp>();
+
+  const { signIn } = useAuthentication();
 
   const {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<SignInFormData>({
+  } = useForm<SignInDTO>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: 'a@a.com',
@@ -51,7 +51,8 @@ export function SignIn() {
   const insets = useSafeAreaInsets();
   const paddingTop = insets.top + TOP_SPACING;
 
-  async function handleSignIn(data: SignInFormData) {
+  async function handleSignIn(data: SignInDTO) {
+    await signIn(data);
   }
 
   function handleCreateAccount() {

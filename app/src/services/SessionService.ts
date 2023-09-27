@@ -2,31 +2,18 @@ import { AxiosResponse } from 'axios';
 
 import { http } from '../libs/axios';
 
-interface CreateSessionData {
-  email: string;
-  password: string;
-}
+import {
+  Session,
+} from '../contexts/Authentication/Authentication.model';
 
-export interface Session {
-  token: string;
-  user: {
-    id: string;
-    avatar: string;
-    name: string;
-    email: string;
-    tel: string;
-    created_at: string;
-    updated_at: string;
-  };
-  'refresh_token': string;
-}
+import { SignInDTO } from '../dtos/SignIn';
 
 class SessionService {
-  async create({ email, password }: CreateSessionData) {
+  async create({ email, password }: SignInDTO) {
     const response = await http.post<
       Session,
-      AxiosResponse<Session, CreateSessionData>,
-      CreateSessionData
+      AxiosResponse<Session, SignInDTO>,
+      SignInDTO
     >('/sessions', {
       email,
       password,
