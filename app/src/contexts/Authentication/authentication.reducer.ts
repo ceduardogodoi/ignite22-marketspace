@@ -1,9 +1,9 @@
-import { AuthenticationModel } from './Authentication.model';
+import { AuthenticationContextModel } from './AuthenticationContext.model';
 import { Action, ActionTypes } from './authentication.actions';
 
-export const initialState = {} as AuthenticationModel;
+export const initialState = {} as AuthenticationContextModel;
 
-export function reducer(state: AuthenticationModel, action: Action): AuthenticationModel {
+export function reducer(state: AuthenticationContextModel, action: Action): AuthenticationContextModel {
   switch (action.type) {
     case ActionTypes.CREATE_SESSION: {
       const session = action.payload;

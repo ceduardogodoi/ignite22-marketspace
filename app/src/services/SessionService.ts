@@ -4,7 +4,7 @@ import { http } from '../libs/axios';
 
 import {
   Session,
-} from '../contexts/Authentication/Authentication.model';
+} from '../contexts/Authentication/AuthenticationContext.model';
 
 import { SignInDTO } from '../dtos/SignIn';
 

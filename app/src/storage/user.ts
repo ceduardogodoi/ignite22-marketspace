@@ -1,9 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Session } from '../services/SessionService';
-import { STORAGE_USER } from './keys';
+import { User } from '../contexts/Authentication/AuthenticationContext.model';
 
-type User = Session['user'];
+import { STORAGE_USER } from './keys';
 
 export async function saveUser(user: User): Promise<void> {
   const value = JSON.stringify(user);

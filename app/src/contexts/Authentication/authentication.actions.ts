@@ -1,4 +1,4 @@
-import { Session } from './Authentication.model';
+import { Session } from './AuthenticationContext.model';
 
 // Action Types
 export enum ActionTypes {

@@ -1,6 +1,6 @@
 import { SignInDTO } from '../../dtos/SignIn';
 
-interface User {
+export interface User {
   id: string;
   avatar: string;
   name: string;
@@ -13,12 +13,12 @@ interface User {
 export interface Session {
   token: string;
   user: User;
-  'refresh-token': string;
+  'refresh_token': string;
 }
 
-export interface AuthenticationModel {
-  session?: Session;
-  
+export interface AuthenticationContextModel {
+  session?: Session | null;
+
   signIn(payload: SignInDTO): Promise<void>;
-  signOut(): void;
+  signOut(): Promise<void>;
 }
