@@ -18,6 +18,7 @@ export interface Session {
 
 export interface AuthenticationContextModel {
   session?: Session | null;
+  isLoading?: boolean;
 
   signIn(payload: SignInDTO): Promise<void>;
   signOut(): Promise<void>;

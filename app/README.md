@@ -3,4 +3,5 @@
 [X] SignIn > logar usuário
 [X] Home > deslogar usuário
 [X] SignIn > manter usuário logado
-[ ] SignIn > criar loader enquanto verificar se usuário está na storage
+[X] SignIn > criar loader enquanto verificar se usuário está na storage
+[ ] Home > mostrar dados do usuário
